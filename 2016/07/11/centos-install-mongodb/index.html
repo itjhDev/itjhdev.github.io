@@ -1,0 +1,879 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="”Cache-Control”" content="”no-transform”">
+<meta http-equiv="”Cache-Control”" content="”no-siteapp”">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Centos,mongodb,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="itjh" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="MongoDB是什么东东这里就多说了, 就是一个数据库与mysql不同, 下面纪录在Centos下安装教程, 包括设置权限、启动、创建用户设置权限等操作!  Centos 6.7MongoDB 3.2.7 官网: https://www.mongodb.com">
+<meta name="keywords" content="Centos,mongodb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos 安装MongoDB 详细教程">
+<meta property="og:url" content="http://itjh.net/2016/07/11/centos-install-mongodb/index.html">
+<meta property="og:site_name" content="itjh">
+<meta property="og:description" content="MongoDB是什么东东这里就多说了, 就是一个数据库与mysql不同, 下面纪录在Centos下安装教程, 包括设置权限、启动、创建用户设置权限等操作!  Centos 6.7MongoDB 3.2.7 官网: https://www.mongodb.com">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://o449xphwj.qnssl.com/2016-07-11-highres_14391580-700x336.png">
+<meta property="og:image" content="https://o449xphwj.qnssl.com/2016-07-11-14680760445645.jpg">
+<meta property="og:image" content="https://o449xphwj.qnssl.com/2016-07-11-14680760612675.jpg">
+<meta property="og:image" content="https://o449xphwj.qnssl.com/2016-07-11-14680760300640.jpg">
+<meta property="og:image" content="https://o449xphwj.qnssl.com/2016-07-11-14680761618844.jpg">
+<meta property="og:updated_time" content="2019-07-01T07:48:10.426Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Centos 安装MongoDB 详细教程">
+<meta name="twitter:description" content="MongoDB是什么东东这里就多说了, 就是一个数据库与mysql不同, 下面纪录在Centos下安装教程, 包括设置权限、启动、创建用户设置权限等操作!  Centos 6.7MongoDB 3.2.7 官网: https://www.mongodb.com">
+<meta name="twitter:image" content="https://o449xphwj.qnssl.com/2016-07-11-highres_14391580-700x336.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Centos 安装MongoDB 详细教程 | itjh </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4780a40da158bc0b270ebfd0ba1962e9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">itjh</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '4z83RvbCqe8KeVZ5ZA9p','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Centos 安装MongoDB 详细教程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-11T09:28:41+08:00" content="2016-07-11">
+              2016-07-11
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/11/centos-install-mongodb/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/11/centos-install-mongodb/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/11/centos-install-mongodb/" class="leancloud_visitors" data-flag-title="Centos 安装MongoDB 详细教程">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://o449xphwj.qnssl.com/2016-07-11-highres_14391580-700x336.png" alt="highres_14391580-700x336"></p>
+<p><code>MongoDB</code>是什么东东这里就多说了, 就是一个数据库与<code>mysql</code>不同, 下面纪录在<code>Centos</code>下安装教程, 包括设置权限、启动、创建用户设置权限等操作!</p>
+<blockquote>
+<p>Centos 6.7<br>MongoDB 3.2.7</p>
+<p>官网: <code>https://www.mongodb.com</code></p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>这里我们在官网下载源码进行安装. 下载地址: <code>https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel62-3.2.7.tgz</code></p>
+<h4 id="下载源码-gt-使用wget下载"><a href="#下载源码-gt-使用wget下载" class="headerlink" title="下载源码-&gt; 使用wget下载"></a>下载源码-&gt; 使用<code>wget</code>下载</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="regexp">/usr/</span>local</span><br><span class="line">wget https:<span class="regexp">//</span>fastdl.mongodb.org<span class="regexp">/linux/m</span>ongodb-linux-x86_64-rhel62-<span class="number">3.2</span>.<span class="number">7</span>.tgz</span><br><span class="line">tar -xvf mongodb-linux-x86_64-rhel62-<span class="number">3.2</span>.<span class="number">7</span>.tgz</span><br><span class="line">mv mongodb-linux-x86_64-rhel62-<span class="number">3.2</span>.<span class="number">7</span> mongodb</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h4><p>修改<code>/etc/profile</code>, 添加如下内容</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">MONGODB_HOME</span>=/usr/local/mongodb</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=<span class="variable">$MONGODB_HOME</span>/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>执行命令:</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>查看mongodb版本信息 <code>mongod -v</code></p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mongod -v</span><br><span class="line"></span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.546<span class="string">+0800</span> I CONTROL  [initandlisten] MongoDB starting : pid=1314 port=27017 dbpath=/data/db 64-bit host=iZ28lgwrrtqZ</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.553<span class="string">+0800</span> I CONTROL  [initandlisten] db version v3.2.7</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.553<span class="string">+0800</span> I CONTROL  [initandlisten] git version: 4249c1d2b5999ebbf1fdf3bc0e0e3b3ff5c0aaf2</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.553<span class="string">+0800</span> I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1e-fips 11 Feb 2013</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.553<span class="string">+0800</span> I CONTROL  [initandlisten] allocator: tcmalloc</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.553<span class="string">+0800</span> I CONTROL  [initandlisten] modules: none</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.553<span class="string">+0800</span> I CONTROL  [initandlisten] build environment:</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.553<span class="string">+0800</span> I CONTROL  [initandlisten]     distmod: rhel62</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.553<span class="string">+0800</span> I CONTROL  [initandlisten]     distarch: x86_64</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.553<span class="string">+0800</span> I CONTROL  [initandlisten]     target_arch: x86_64</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.555<span class="string">+0800</span> I CONTROL  [initandlisten] options: &#123; systemLog: &#123; verbosity: 1 &#125; &#125;</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.555<span class="string">+0800</span> D NETWORK  [initandlisten] fd limit hard:65535 soft:65535 max conn: 52428</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.616<span class="string">+0800</span> D -        [initandlisten] User Assertion: 29:Data directory /data/db not found.</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.635<span class="string">+0800</span> I STORAGE  [initandlisten] exception in initAndListen: 29 Data directory /data/db not found., terminating</span><br><span class="line">2016<span class="string">-07</span><span class="string">-09</span>T22:01:18.635<span class="string">+0800</span> I CONTROL  [initandlisten] dbexit:  rc: 100</span><br></pre></td></tr></table></figure>
+
+<p>🍺恭喜你安装成功了! 下面进行配置, 启动</p>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><h4 id="创建数据库目录"><a href="#创建数据库目录" class="headerlink" title="创建数据库目录"></a>创建数据库目录</h4><p><code>MongoDB</code>需要自建数据库文件夹. </p>
+<figure class="highlight irpf90"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /<span class="keyword">data</span>/mongodb</span><br><span class="line">mkdir -p /<span class="keyword">data</span>/mongodb/<span class="built_in">log</span></span><br><span class="line"><span class="keyword">touch</span> /<span class="keyword">data</span>/mongodb/<span class="built_in">log</span>/mongodb.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="添加配置文件"><a href="#添加配置文件" class="headerlink" title="添加配置文件"></a>添加配置文件</h4><p>新建mongodb.conf配置文件, 通过这个配置文件进行启动. </p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/mongodb.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
+
+<p>配置文件参数说明:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mongodb的参数说明：</span><br><span class="line"> --dbpath 数据库路径(数据文件)</span><br><span class="line"> --logpath 日志文件路径</span><br><span class="line"> --master 指定为主机器</span><br><span class="line"> --slave 指定为从机器</span><br><span class="line"> --source 指定主机器的IP地址</span><br><span class="line"> --pologSize 指定日志文件大小不超过64M.因为resync是非常操作量大且耗时，最好通过设置一个足够大的oplogSize来避免resync(默认的 oplog大小是空闲磁盘大小的5%)。</span><br><span class="line"> --logappend 日志文件末尾添加</span><br><span class="line"> --port 启用端口号</span><br><span class="line"> --fork 在后台运行</span><br><span class="line"> --only 指定只复制哪一个数据库</span><br><span class="line"> --slavedelay 指从复制检测的时间间隔</span><br><span class="line"> --auth 是否需要验证权限登录(用户名和密码)</span><br><span class="line"></span><br><span class="line">注：mongodb配置文件里面的参数很多，定制特定的需求，请参考官方文档</span><br></pre></td></tr></table></figure>
+
+<p>配置文件内容:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dbpath</span>=/data/mongodb</span><br><span class="line"><span class="attr">logpath</span>=/data/mongodb/log/mongodb.log</span><br><span class="line"><span class="attr">logappend</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">port</span>=<span class="number">27017</span></span><br><span class="line"><span class="attr">fork</span>=<span class="literal">true</span></span><br><span class="line"><span class="comment">##auth = true # 先关闭, 创建好用户在启动</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="通过配置文件启动"><a href="#通过配置文件启动" class="headerlink" title="通过配置文件启动"></a>通过配置文件启动</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mongod -f /etc/mongodb.conf</span><br><span class="line">about <span class="keyword">to</span> fork child process, waiting until<span class="built_in"> server </span>is ready <span class="keyword">for</span> connections.</span><br><span class="line">forked process: 2814</span><br><span class="line">child process started successfully, parent exiting</span><br></pre></td></tr></table></figure>
+
+<p>出现successfully表示启动成功了.</p>
+<p>进入 <code>MongoDB</code>后台管理 <code>Shell</code></p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> <span class="string">/usr/local/mongodb/bin</span></span><br><span class="line"><span class="string">./mongo</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>创建数据库</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="keyword">test</span></span><br><span class="line">switched <span class="keyword">to</span> db <span class="keyword">test</span></span><br></pre></td></tr></table></figure>
+
+<p>  创建成功. </p>
+</li>
+<li><p>创建用户, 设置权限</p>
+  <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">db</span><span class="selector-class">.createUser</span>(</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attribute">user</span>: <span class="string">"test"</span>,</span><br><span class="line">        <span class="attribute">pwd</span>: <span class="string">"test"</span>,</span><br><span class="line">        <span class="attribute">roles</span>: [ &#123; <span class="attribute">role</span>: <span class="string">"readWrite"</span>, <span class="attribute">db</span>: <span class="string">"test"</span> &#125; ]</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<pre><code>详细权限配置参考网址: [MongoDB 3.0 用户创建](http://www.cnblogs.com/zhoujinyi/p/4610050.html)</code></pre><h4 id="配置防火墙"><a href="#配置防火墙" class="headerlink" title="配置防火墙"></a>配置防火墙</h4><p>将27017端口添加到防火墙中</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vi <span class="string">/etc/sysconfig/iptables</span></span><br><span class="line">    -A INPUT -m state <span class="params">--state</span> NEW -m tcp -p tcp <span class="params">--dport</span> 27017 -j ACCEPT</span><br><span class="line"><span class="string">/etc/init.d/iptables</span> <span class="keyword">reload</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>这里我们使用MongoChef 软件进行连接测试</p>
+<p><img src="https://o449xphwj.qnssl.com/2016-07-11-14680760445645.jpg" alt><br><img src="https://o449xphwj.qnssl.com/2016-07-11-14680760612675.jpg" alt><br><img src="https://o449xphwj.qnssl.com/2016-07-11-14680760300640.jpg" alt><br><img src="https://o449xphwj.qnssl.com/2016-07-11-14680761618844.jpg" alt></p>
+<p>🍺恭喜你, mongodb成功安装好了！！</p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>我们创建了用户, 这个时候要开启权限启动, 在配置文件中添加<code>auth=true</code>, 然后重启一下</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><code>MongoDB</code> 默认没有用户权限的, 建议大家一定要设置, 这样数据才安全. </p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block； padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="LijunSong wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫上面的微信公众号，订阅IT江湖！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Centos/" rel="tag">#Centos</a>
+          
+            <a href="/tags/mongodb/" rel="tag">#mongodb</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/06/macgoogsoft/" rel="next" title="Mac 高效软件汇总">
+                <i class="fa fa-chevron-left"></i> Mac 高效软件汇总
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/18/java-sf-cz/" rel="prev" title="查找算法的Java实现">
+                查找算法的Java实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/11/centos-install-mongodb/" data-title="Centos 安装MongoDB 详细教程" data-url="http://itjh.net/2016/07/11/centos-install-mongodb/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/sljhead.jpg" alt="LijunSong">
+          <p class="site-author-name" itemprop="name">LijunSong</p>
+          <p class="site-description motion-element" itemprop="description">itjh</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/itjhDev" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kobeMyformerly" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/jianghu521" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/lijun-song" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载源码-gt-使用wget下载"><span class="nav-number">1.1.</span> <span class="nav-text">下载源码-&gt; 使用wget下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置环境变量"><span class="nav-number">1.2.</span> <span class="nav-text">配置环境变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动"><span class="nav-number">2.</span> <span class="nav-text">启动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建数据库目录"><span class="nav-number">2.1.</span> <span class="nav-text">创建数据库目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加配置文件"><span class="nav-number">2.2.</span> <span class="nav-text">添加配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过配置文件启动"><span class="nav-number">2.3.</span> <span class="nav-text">通过配置文件启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置防火墙"><span class="nav-number">2.4.</span> <span class="nav-text">配置防火墙</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">4.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LijunSong</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"itjhdev"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("J0LSh7C7U1dFmjLJuLwLgJ98-gzGzoHsz", "8eb63ziO2G0YArw4IWQn7v1N");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

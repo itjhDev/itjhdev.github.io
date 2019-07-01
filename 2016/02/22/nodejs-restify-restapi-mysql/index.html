@@ -1,0 +1,914 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="”Cache-Control”" content="”no-transform”">
+<meta http-equiv="”Cache-Control”" content="”no-siteapp”">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="node.js,restify,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="itjh" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="文章主要包括restify开发api，node.js连接mysql返回json数据等。 restify简介  restify是一个基于Nodejs的REST应用框架，支持服务器端和客户端。restify比起express更专注于REST服务，去掉了express中的template, render等功能，同时强化了REST协议使用，版本化支持，HTTP的异常处理。   Github:node-re">
+<meta name="keywords" content="node.js,restify">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node.js使用restify开发REST web services">
+<meta property="og:url" content="http://itjh.net/2016/02/22/nodejs-restify-restapi-mysql/index.html">
+<meta property="og:site_name" content="itjh">
+<meta property="og:description" content="文章主要包括restify开发api，node.js连接mysql返回json数据等。 restify简介  restify是一个基于Nodejs的REST应用框架，支持服务器端和客户端。restify比起express更专注于REST服务，去掉了express中的template, render等功能，同时强化了REST协议使用，版本化支持，HTTP的异常处理。   Github:node-re">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/restify/node-restify/gh-images/logo/png/restify_logo_black_transp_288x288.png">
+<meta property="og:updated_time" content="2019-07-01T07:48:11.363Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node.js使用restify开发REST web services">
+<meta name="twitter:description" content="文章主要包括restify开发api，node.js连接mysql返回json数据等。 restify简介  restify是一个基于Nodejs的REST应用框架，支持服务器端和客户端。restify比起express更专注于REST服务，去掉了express中的template, render等功能，同时强化了REST协议使用，版本化支持，HTTP的异常处理。   Github:node-re">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/restify/node-restify/gh-images/logo/png/restify_logo_black_transp_288x288.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> node.js使用restify开发REST web services | itjh </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4780a40da158bc0b270ebfd0ba1962e9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">itjh</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '4z83RvbCqe8KeVZ5ZA9p','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                node.js使用restify开发REST web services
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-22T15:23:57+08:00" content="2016-02-22">
+              2016-02-22
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">node.js</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/02/22/nodejs-restify-restapi-mysql/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/22/nodejs-restify-restapi-mysql/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/02/22/nodejs-restify-restapi-mysql/" class="leancloud_visitors" data-flag-title="node.js使用restify开发REST web services">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>文章主要包括restify开发api，node.js连接mysql返回json数据等。</strong></p>
+<h4 id="restify简介"><a href="#restify简介" class="headerlink" title="restify简介"></a>restify简介</h4><p><img src="https://raw.githubusercontent.com/restify/node-restify/gh-images/logo/png/restify_logo_black_transp_288x288.png" alt></p>
+<blockquote>
+<p><code>restify</code>是一个基于Nodejs的REST应用框架，支持服务器端和客户端。<code>restify</code>比起<code>express</code>更专注于<code>REST</code>服务，去掉了<code>express</code>中的<code>template</code>, <code>render</code>等功能，同时强化了<code>REST</code>协议使用，版本化支持，<code>HTTP</code>的异常处理。</p>
+</blockquote>
+<blockquote>
+<p>Github:<a href="https://github.com/restify/node-restify" target="_blank" rel="noopener">node-restify</a></p>
+</blockquote>
+<blockquote>
+<p>API:<a href="http://restify.com/" target="_blank" rel="noopener">API DOCUMENTATION</a></p>
+</blockquote>
+<a id="more"></a>
+
+<h4 id="restify安装"><a href="#restify安装" class="headerlink" title="restify安装"></a>restify安装</h4><ul>
+<li>新建项目</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir nodejs_restify</span><br><span class="line">cd nodejs_restify</span><br><span class="line"></span><br><span class="line">npm install restify</span><br></pre></td></tr></table></figure>
+
+<p>出现以下内容表示安装成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">restify@4.0.4 ../../../../node_modules/restify</span><br><span class="line">├── assert-plus@0.1.5</span><br><span class="line">├── tunnel-agent@0.4.2</span><br><span class="line">├── escape-regexp-component@1.0.2</span><br><span class="line">├── keep-alive-agent@0.0.1</span><br><span class="line">├── negotiator@0.5.3</span><br><span class="line">├── mime@1.3.4</span><br><span class="line">├── lru-cache@2.7.3</span><br><span class="line">├── formidable@1.0.17</span><br><span class="line">├── node-uuid@1.4.7</span><br><span class="line">├── qs@3.1.0</span><br><span class="line">├── semver@4.3.6</span><br><span class="line">├── spdy@1.32.5</span><br><span class="line">├── once@1.3.3 (wrappy@1.0.1)</span><br><span class="line">├── http-signature@0.11.0 (ctype@0.5.3, asn1@0.1.11)</span><br><span class="line">├── verror@1.6.1 (core-util-is@1.0.2, extsprintf@1.2.0)</span><br><span class="line">├── vasync@1.6.3 (verror@1.6.0)</span><br><span class="line">├── backoff@2.4.1 (precond@0.2.3)</span><br><span class="line">├── csv@0.4.6 (csv-generate@0.0.6, csv-stringify@0.0.8, stream-transform@0.1.1, csv-parse@1.0.1)</span><br><span class="line">├── bunyan@1.7.0 (safe-json-stringify@1.0.3, moment@2.11.2, mv@2.1.1)</span><br><span class="line">└── dtrace-provider@0.6.0 (nan@2.2.0)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建rest服务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch app.js</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>app.js内容</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var restify = require('restify');</span><br><span class="line"></span><br><span class="line">function respond(req, res, next) &#123;</span><br><span class="line">  res.send('hello ' + req.params.name);</span><br><span class="line">  next();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var server = restify.createServer(&#123;</span><br><span class="line">   </span><br><span class="line">   name: 'ds_api',</span><br><span class="line">  version: '1.0.0'</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.get('/hello/:name', respond);</span><br><span class="line">server.head('/hello/:name', respond);</span><br><span class="line"></span><br><span class="line">server.listen(8081, function() &#123;</span><br><span class="line">  console.log('%s listening at %s', server.name, server.url);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动服务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node app.js</span><br><span class="line"></span><br><span class="line">listening at http://[::]:8081</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用<code>curl</code>测试</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">curl -is http://localhost:8081/hello/mark</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 12</span><br><span class="line">Date: Mon, 22 Feb 2016 06:57:42 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">"hello mark"</span><br></pre></td></tr></table></figure>
+
+<p>OK,我们创建了一个8080端口的rest服务，包括<code>/hello/:name</code>接口.<br>更多内容可以访问<a href="http://restify.com/" target="_blank" rel="noopener">API DOCUMENTATION</a></p>
+<h4 id="Mysql服务"><a href="#Mysql服务" class="headerlink" title="Mysql服务"></a>Mysql服务</h4><ul>
+<li>安装mysql</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install felixge/node-mysql</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在<code>app.js</code>创建服务</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 连接mysql</span></span><br><span class="line"><span class="keyword">var</span> mysql = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</span><br><span class="line"><span class="keyword">var</span> conn = mysql.createConnection(&#123;</span><br><span class="line">    host: ‘ip’,</span><br><span class="line">    user: ‘user’,</span><br><span class="line">    password: ‘pasw’,</span><br><span class="line">    database:<span class="string">'ds_video'</span>,</span><br><span class="line">    port: <span class="number">3306</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>重写<a href="https://github.com/doushiDev/ds_ios" target="_blank" rel="noopener">逗视</a>获取视频的接口</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">server.get('queryListVideo/:vid/:count/:type/:userId',function respond(req, res, next) &#123;</span><br><span class="line"> </span><br><span class="line"> 	conn.query( &#123;</span><br><span class="line"></span><br><span class="line">		 sql: 'select distinct v.title as title,v.id,v.url as videoUrl ,v.pic,v.type,v.createTime as pushTime ,'+</span><br><span class="line">		</span><br><span class="line">		'(select count(*) from `tb_user_video` tub WHERE tub.`status` = 1 AND tub.userId = ? AND tub.videoId = v.id) as isCollectStatus'+</span><br><span class="line">		</span><br><span class="line">		' from `tb_video` v where'+</span><br><span class="line">		' v.title != ""   AND v.title not like "%#%" AND v.title not like "%@%" AND v.title not like "%微%"  '+</span><br><span class="line">		' AND v.title not like "%秒拍%"  AND v.title not like "%号%" '+</span><br><span class="line">		' AND v.title not like "%美拍%"   '+</span><br><span class="line">		</span><br><span class="line">		' AND type = ? '+</span><br><span class="line"></span><br><span class="line">		'ORDER BY id DESC LIMIT ?' ,</span><br><span class="line">		values: [req.params.userId,req.params.type,parseInt(req.params.count)]</span><br><span class="line">	&#125;,</span><br><span class="line"></span><br><span class="line">	 function(err, rows, fields) &#123;</span><br><span class="line">    if (err) throw err; </span><br><span class="line">        console.log('The title is: ', title = rows[0].title); </span><br><span class="line">    	res.send(200, res.json(rows));</span><br><span class="line"></span><br><span class="line">	&#125;);  </span><br><span class="line">   return next();</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>创建了<code>queryListVideo</code>服务，<code>/:vid/:count/:type/:userId</code> 参数，</p>
+<p><code>:vid</code>格式传递参数，</p>
+<p><code>req.params.vid</code>获取参数值</p>
+<p><code>res.json(rows)</code> 数据json格式输出</p>
+<p><code>res.send(200, res.json(rows));</code> 服务返回值 <code>200</code>HTTP状态码，<code>res.json(rows)</code>数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">conn.query( &#123; </span><br><span class="line">     sql:  ’sql语句 ？’,</span><br><span class="line">     values: [] // ? 填充值</span><br><span class="line">   &#125;,</span><br><span class="line">   </span><br><span class="line">   function(err, rows, fields) &#123; //数据库返回数据</span><br><span class="line">   if (err) throw err;  </span><br><span class="line">       res.send(200, res.json(rows));</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>OK，我们测试一下吧！</p>
+<p>服务地址：<code>http://127.0.0.1:8081/queryListVideo/0/10/2/1</code></p>
+<p>返回内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "我也是醉了",</span><br><span class="line">    "id": 37729,</span><br><span class="line">    "videoUrl": "http://mvvideo2.meitudata.com/56c8a0c08e10d5457.mp4",</span><br><span class="line">    "pic": "http://mvimg1.meitudata.com/56c8a0bfef7c11168.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T18:11:33.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "女神如此难追",</span><br><span class="line">    "id": 37727,</span><br><span class="line">    "videoUrl": "http://mvvideo2.meitudata.com/56c7de946f8bb3420.mp4",</span><br><span class="line">    "pic": "http://mvimg11.meitudata.com/56c8150c4fe9d9762.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T18:11:32.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "一个疯子+一个傻子=两张大饼脸️精彩活动️问：视频中我说了几个啥玩意儿完全即兴某人还不知道规则",</span><br><span class="line">    "id": 37726,</span><br><span class="line">    "videoUrl": "http://mvvideo1.meitudata.com/56c8a0186f59d9869.mp4",</span><br><span class="line">    "pic": "http://mvimg2.meitudata.com/56c8a10eaa5394719.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T18:11:32.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "爆笑歌词梗",</span><br><span class="line">    "id": 37704,</span><br><span class="line">    "videoUrl": "http://mvvideo1.meitudata.com/56c0438416f2a3712.mp4",</span><br><span class="line">    "pic": "http://mvimg10.meitudata.com/56c832793e9705833.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T17:14:14.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "情感专线-拜金女的那些事儿",</span><br><span class="line">    "id": 37701,</span><br><span class="line">    "videoUrl": "http://gslb.miaopai.com/stream/Lqn~dQ1tbuJ5KNkc~LAG1A__.m3u8",</span><br><span class="line">    "pic": "http://wsacdn3.miaopai.com/stream/Lqn~dQ1tbuJ5KNkc~LAG1A___m.jpg",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T17:14:13.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "一网友说她家鹦鹉笑起来好像她奶奶[笑cry]",</span><br><span class="line">    "id": 37696,</span><br><span class="line">    "videoUrl": "http://gslb.miaopai.com/stream/59hdWRg61qsMMwvT5BXPNg__.mp4?vend=miaopai&amp;59hdWRg61qsMMwvT5BXPNg__.mp4miaopai",</span><br><span class="line">    "pic": "http://wsacdn1.miaopai.com/stream/59hdWRg61qsMMwvT5BXPNg___tmp_11_363_.png",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T17:14:11.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "捉迷藏1 这当爹的心太大了吧！这不摆明了坑儿子么？！",</span><br><span class="line">    "id": 37681,</span><br><span class="line">    "videoUrl": "http://gslb.miaopai.com/stream/fKPmQViX6eytWcD6XxR2Yw__.mp4?vend=miaopai&amp;fKPmQViX6eytWcD6XxR2Yw__.mp4miaopai",</span><br><span class="line">    "pic": "http://wsqncdn.miaopai.com/stream/fKPmQViX6eytWcD6XxR2Yw___m.jpg",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T16:12:51.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "聚会上最装逼的人",</span><br><span class="line">    "id": 37664,</span><br><span class="line">    "videoUrl": "http://mvvideo1.meitudata.com/56c7fbce28caf6036.mp4",</span><br><span class="line">    "pic": "http://mvimg1.meitudata.com/56c703002a0dc7724.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T15:22:30.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "现在的女生真的很现实",</span><br><span class="line">    "id": 37659,</span><br><span class="line">    "videoUrl": "http://mvvideo2.meitudata.com/56c87dd4057812379.mp4",</span><br><span class="line">    "pic": "http://mvimg2.meitudata.com/56c87ded57b056131.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T15:22:26.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "断奶篇-唱回到过去",</span><br><span class="line">    "id": 37658,</span><br><span class="line">    "videoUrl": "http://gslb.miaopai.com/stream/aeNf6EQmnzUo4J22Ms~Tfg__.mp4?vend=miaopai&amp;aeNf6EQmnzUo4J22Ms~Tfg__.mp4miaopai",</span><br><span class="line">    "pic": "http://wsqncdn.miaopai.com/stream/aeNf6EQmnzUo4J22Ms~Tfg___m.jpg",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T15:22:25.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>ðð完成了今天的任务了。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>我们初步学会了创建<code>REST API</code>服务，在<code>node.js</code>中连接<code>mysql</code>以及<code>sql</code>的使用。但是这样的代码还有很多需要改进的地方，这是我们下一步要做的。</p>
+<blockquote>
+<p>更多内容可以关注我</p>
+</blockquote>
+<blockquote>
+<p><a href="http://weibo.com/313381777" target="_blank" rel="noopener">微博</a> </p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/itjhDev" target="_blank" rel="noopener">Github</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block； padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="LijunSong wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫上面的微信公众号，订阅IT江湖！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node-js/" rel="tag">#node.js</a>
+          
+            <a href="/tags/restify/" rel="tag">#restify</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/16/githubstudy/" rel="next" title="妹子告诉你怎样使用 GitHub！">
+                <i class="fa fa-chevron-left"></i> 妹子告诉你怎样使用 GitHub！
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/09/centos-kong-api/" rel="prev" title="Centos搭建Kong API框架完整教程">
+                Centos搭建Kong API框架完整教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/02/22/nodejs-restify-restapi-mysql/" data-title="node.js使用restify开发REST web services" data-url="http://itjh.net/2016/02/22/nodejs-restify-restapi-mysql/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/sljhead.jpg" alt="LijunSong">
+          <p class="site-author-name" itemprop="name">LijunSong</p>
+          <p class="site-description motion-element" itemprop="description">itjh</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/itjhDev" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kobeMyformerly" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/jianghu521" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/lijun-song" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#restify简介"><span class="nav-number">1.</span> <span class="nav-text">restify简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#restify安装"><span class="nav-number">2.</span> <span class="nav-text">restify安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mysql服务"><span class="nav-number">3.</span> <span class="nav-text">Mysql服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LijunSong</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"itjhdev"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("J0LSh7C7U1dFmjLJuLwLgJ98-gzGzoHsz", "8eb63ziO2G0YArw4IWQn7v1N");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
