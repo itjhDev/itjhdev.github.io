@@ -5,9 +5,7 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Linux如何实现按文件夹大小排序, itjh">
-    <meta name="description" content="实现按文件夹大小排序1for i in $(ls -l |grep &#39;^d&#39; |du -s * |sort -nr|awk &#39;&amp;#123;print $2&amp;#125;&#39;);do du -sh $i;done
-
-">
+    <meta name="description" content="实现按文件夹大小排序 for i in $(ls -l |grep &amp;#39;^d&amp;#39; |du -s * |sort -nr|awk &amp;#39;{print $2}&amp;#39;);do du -sh $i;done ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -30,7 +28,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -410,9 +408,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="实现按文件夹大小排序"><a href="#实现按文件夹大小排序" class="headerlink" title="实现按文件夹大小排序"></a>实现按文件夹大小排序</h4><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="keyword">ls</span> -l |grep <span class="string">'^d'</span> |du -s * |<span class="keyword">sort</span> -nr|awk <span class="string">'&#123;print $2&#125;'</span>);<span class="keyword">do</span> du -sh $i;done</span><br></pre></td></tr></table></figure>
-
-
+                <h4 id="实现按文件夹大小排序"><a href="#实现按文件夹大小排序" class="headerlink" title="实现按文件夹大小排序"></a>实现按文件夹大小排序</h4><pre><code> for i in $(ls -l |grep &#39;^d&#39; |du -s * |sort -nr|awk &#39;{print $2}&#39;);do du -sh $i;done </code></pre>
             </div>
             <hr/>
 
@@ -632,7 +628,10 @@
 效果图:
 
 
-部分代码:设置滑动代理123456789101112131415
+部分代码:设置滑动代理/**
+ 设置滑动代理
+
+ - param
                         
                     </div>
                     <div class="publish-info">

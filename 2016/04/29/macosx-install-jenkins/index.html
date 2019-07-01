@@ -30,7 +30,7 @@ Jenkins 是一个开源项目，提供了一种易于使用的持续集成系统
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -421,12 +421,10 @@ Jenkins 是一个开源项目，提供了一种易于使用的持续集成系统
 
 <h4 id="软件准备"><a href="#软件准备" class="headerlink" title="软件准备"></a>软件准备</h4><ul>
 <li><p>下载tomcat</p>
-  <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="regexp">//</span>apache.mirrors.ionfish.org<span class="regexp">/tomcat/</span>tomcat-<span class="number">8</span><span class="regexp">/v8.0.33/</span>bin<span class="regexp">/apache-tomcat-8.0.33.zip</span></span><br></pre></td></tr></table></figure>
-
-<p>  <img src="http://o449xphwj.qnssl.com/2016-04-29-14619204997836.jpg" alt></p>
+<pre><code>  wget http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v8.0.33/bin/apache-tomcat-8.0.33.zip</code></pre><p>  <img src="http://o449xphwj.qnssl.com/2016-04-29-14619204997836.jpg" alt></p>
 <p>  解压tomcat</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">unaip</span> <span class="selector-tag">apache-tomcat-8</span><span class="selector-class">.0</span><span class="selector-class">.33</span><span class="selector-class">.zip</span></span><br><span class="line"><span class="selector-tag">mv</span> <span class="selector-tag">apache-tomcat-8</span><span class="selector-class">.0</span><span class="selector-class">.33</span> <span class="selector-tag">tomcat_jenkins</span></span><br></pre></td></tr></table></figure>
-</li>
+<pre><code>  unaip apache-tomcat-8.0.33.zip
+  mv apache-tomcat-8.0.33 tomcat_jenkins</code></pre></li>
 <li><p>安装JDK</p>
 <p>  直接去官网下载pkg,安装就可以了.这里不写详细的教程了</p>
 </li>
@@ -438,44 +436,29 @@ Jenkins 是一个开源项目，提供了一种易于使用的持续集成系统
 <h4 id="安装-启动-Jenkins"><a href="#安装-启动-Jenkins" class="headerlink" title="安装,启动 Jenkins"></a>安装,启动 Jenkins</h4><ul>
 <li><p>准备<code>jenkins</code>的<code>tomcat</code></p>
 <p>  将<code>jenkins.war</code>文件复制到<code>jenkins/tomcat_jenkins/webapps</code>,然后删除<code>ROOT</code>文件, 重命名<code>jenkins.war -&gt; ROOT.war</code></p>
-   <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv jenkins<span class="selector-class">.war</span> jenkins/tomcat_jenkins/webapps/</span><br><span class="line">rm -rf ROOT/</span><br><span class="line">mv jenkins<span class="selector-class">.war</span> ROOT.war</span><br></pre></td></tr></table></figure>
-</li>
+<pre><code>    mv jenkins.war jenkins/tomcat_jenkins/webapps/
+    rm -rf ROOT/
+    mv jenkins.war ROOT.war</code></pre></li>
 <li><p>配置环境变量</p>
 <p>  在 jenkins/tomcat_jenkins/bin 目录下新建 setenv.sh 文件，内容如下：</p>
-  <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">JENKINS_HOME</span>=/Users/songlijun/Work/Dev/jenkins</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<ul>
+<pre><code>  export JENKINS_HOME=/Users/songlijun/Work/Dev/jenkins</code></pre></li>
 <li><p>启动tomcat</p>
-  <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> jenkins/tomcat_jenkins/bin</span><br><span class="line"><span class="keyword">sh</span> ./startup.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<ul>
+<pre><code>  cd jenkins/tomcat_jenkins/bin
+  sh ./startup.sh</code></pre></li>
 <li><p>可能会出现如下错误, 是因为没有设置权限.</p>
-  <figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Cannot find ./catalina.sh</span><br><span class="line">The file is absent<span class="built_in"> or </span>does<span class="built_in"> not </span>have<span class="built_in"> execute </span>permission</span><br><span class="line">This file is needed to run this program</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<ul>
+<pre><code>  Cannot find ./catalina.sh
+  The file is absent or does not have execute permission
+  This file is needed to run this program</code></pre></li>
 <li><p>解决方法,执行如下命令,然后在启动</p>
-  <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 *.<span class="keyword">sh</span></span><br><span class="line"><span class="keyword">sh</span> ./startup.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<ul>
+<pre><code>  chmod 777 *.sh
+  sh ./startup.sh</code></pre></li>
 <li><p>正确启动</p>
-  <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Using <span class="string">CATALINA_BASE:</span>   <span class="regexp">/Users/</span>songlijun<span class="regexp">/Work/</span>Dev<span class="regexp">/jenkins/</span>tomcat_jenkins</span><br><span class="line">Using <span class="string">CATALINA_HOME:</span>   <span class="regexp">/Users/</span>songlijun<span class="regexp">/Work/</span>Dev<span class="regexp">/jenkins/</span>tomcat_jenkins</span><br><span class="line">Using <span class="string">CATALINA_TMPDIR:</span> <span class="regexp">/Users/</span>songlijun<span class="regexp">/Work/</span>Dev<span class="regexp">/jenkins/</span>tomcat_jenkins/temp</span><br><span class="line">Using <span class="string">JRE_HOME:</span>        <span class="regexp">/Library/</span>Java<span class="regexp">/JavaVirtualMachines/</span>jdk1<span class="number">.8</span><span class="number">.0</span>_65.jdk<span class="regexp">/Contents/</span>Home</span><br><span class="line">Using <span class="string">CLASSPATH:</span>       <span class="regexp">/Users/</span>songlijun<span class="regexp">/Work/</span>Dev<span class="regexp">/jenkins/</span>tomcat_jenkins<span class="regexp">/bin/</span>bootstrap.<span class="string">jar:</span><span class="regexp">/Users/</span>songlijun<span class="regexp">/Work/</span>Dev<span class="regexp">/jenkins/</span>tomcat_jenkins<span class="regexp">/bin/</span>tomcat-juli.jar</span><br><span class="line">Tomcat started.</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<ul>
+<pre><code>  Using CATALINA_BASE:   /Users/songlijun/Work/Dev/jenkins/tomcat_jenkins
+  Using CATALINA_HOME:   /Users/songlijun/Work/Dev/jenkins/tomcat_jenkins
+  Using CATALINA_TMPDIR: /Users/songlijun/Work/Dev/jenkins/tomcat_jenkins/temp
+  Using JRE_HOME:        /Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home
+  Using CLASSPATH:       /Users/songlijun/Work/Dev/jenkins/tomcat_jenkins/bin/bootstrap.jar:/Users/songlijun/Work/Dev/jenkins/tomcat_jenkins/bin/tomcat-juli.jar
+  Tomcat started.</code></pre></li>
 <li><p>正常启动日志如下</p>
 <pre><code>  tail -f ../logs/catalina.out
 

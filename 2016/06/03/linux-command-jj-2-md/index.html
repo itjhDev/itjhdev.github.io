@@ -6,11 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Linux 常用命令 进阶 二, itjh">
     <meta name="description" content="
-统计文件/文件夹下面的文件, 关键字出现的次数1grep -o &amp;lt;关键字&amp;gt; &amp;lt;文件*.log&amp;gt; | wc -l
-
-
+统计文件/文件夹下面的文件, 关键字出现的次数grep -o &amp;lt;关键字&amp;gt; &amp;lt;文件*.log&amp;gt; | wc -l
 统计文件的行数方便查看写了多少行的代码!
-1grep -n  &#34;&#34;  *.json | wc -l">
+grep -n  &amp;quot;&amp;quot;  *.json |">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -33,7 +31,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -423,32 +421,22 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201511/12/231304wbyxb9ru5h8esnz0.jpg" alt></p>
-<h4 id="统计文件-文件夹下面的文件-关键字出现的次数"><a href="#统计文件-文件夹下面的文件-关键字出现的次数" class="headerlink" title="统计文件/文件夹下面的文件, 关键字出现的次数"></a>统计文件/文件夹下面的文件, 关键字出现的次数</h4><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -o <span class="variable">&lt;关键字&gt;</span> <span class="variable">&lt;文件*.log&gt;</span> |<span class="string"> wc -l</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://o449xphwj.qnssl.com/2016-06-03-14645932314319.jpg" alt></p>
+<h4 id="统计文件-文件夹下面的文件-关键字出现的次数"><a href="#统计文件-文件夹下面的文件-关键字出现的次数" class="headerlink" title="统计文件/文件夹下面的文件, 关键字出现的次数"></a>统计文件/文件夹下面的文件, 关键字出现的次数</h4><pre><code>grep -o &lt;关键字&gt; &lt;文件*.log&gt; | wc -l</code></pre><p><img src="https://o449xphwj.qnssl.com/2016-06-03-14645932314319.jpg" alt></p>
 <h4 id="统计文件的行数"><a href="#统计文件的行数" class="headerlink" title="统计文件的行数"></a>统计文件的行数</h4><p>方便查看写了多少行的代码!</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">grep</span> -n  <span class="string">""</span>  <span class="regexp">*.json</span> | wc -l</span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
+<pre><code>grep -n  &quot;&quot;  *.json | wc -l</code></pre><a id="more"></a>
 
 <h4 id="wget-文件下载"><a href="#wget-文件下载" class="headerlink" title="wget 文件下载"></a>wget 文件下载</h4><p>格式: wget [参数] [URL地址]</p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://o449xphwj.qnssl.com/<span class="number">0510000056</span>D01C4D6714C00<span class="number">18A0C3432</span>.jpeg</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://o449xphwj.qnssl.com/2016-06-03-14647689412275.jpg" alt></p>
-<h4 id="history-查询命令历史纪录"><a href="#history-查询命令历史纪录" class="headerlink" title="history 查询命令历史纪录"></a>history 查询命令历史纪录</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">history</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://o449xphwj.qnssl.com/2016-06-03-14649231225328.jpg" alt></p>
+<pre><code>wget https://o449xphwj.qnssl.com/0510000056D01C4D6714C0018A0C3432.jpeg</code></pre><p><img src="https://o449xphwj.qnssl.com/2016-06-03-14647689412275.jpg" alt></p>
+<h4 id="history-查询命令历史纪录"><a href="#history-查询命令历史纪录" class="headerlink" title="history 查询命令历史纪录"></a>history 查询命令历史纪录</h4><pre><code>history</code></pre><p><img src="https://o449xphwj.qnssl.com/2016-06-03-14649231225328.jpg" alt></p>
 <h4 id="用户组与用户管理"><a href="#用户组与用户管理" class="headerlink" title="用户组与用户管理"></a>用户组与用户管理</h4><ul>
 <li>创建用户并设置密码</li>
 </ul>
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@AY140610140413Z</span> ~]<span class="meta"># adduser -d /home/songlijun -m  songlijun</span></span><br><span class="line">[root<span class="symbol">@AY140610140413Z</span> ~]<span class="meta"># passwd songlijun</span></span><br></pre></td></tr></table></figure>
-
-<ul>
+<pre><code>[root@AY140610140413Z ~]# adduser -d /home/songlijun -m  songlijun
+[root@AY140610140413Z ~]# passwd songlijun</code></pre><ul>
 <li>创建用户组添加用户</li>
 </ul>
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@AY140610140413Z</span> ~]<span class="meta"># groupadd admin</span></span><br><span class="line">[root<span class="symbol">@AY140610140413Z</span> ~]<span class="meta"># usermod -G admin songlijun</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>一个高效率的命令, 会提高很大的工作效率. 但是在执行命令的时候要谨慎.</p>
+<pre><code>[root@AY140610140413Z ~]# groupadd admin
+[root@AY140610140413Z ~]# usermod -G admin songlijun</code></pre><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>一个高效率的命令, 会提高很大的工作效率. 但是在执行命令的时候要谨慎.</p>
 <p>未完待续…</p>
 
             </div>
@@ -678,7 +666,7 @@ yum 安装的mysql服务
 
 
 查看mysql的安装路径执行查询SQL
-1
+s
                         
                     </div>
                     <div class="publish-info">

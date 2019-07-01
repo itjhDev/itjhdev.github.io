@@ -30,7 +30,7 @@ Jenkins 是一个开源项目，提供了一种易于使用的持续集成系统
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -421,25 +421,26 @@ Jenkins 是一个开源项目，提供了一种易于使用的持续集成系统
 
 <h3 id="yum安装Jenkins"><a href="#yum安装Jenkins" class="headerlink" title="yum安装Jenkins"></a>yum安装Jenkins</h3><ul>
 <li><p>创建 <code>jenkins</code>的 <code>yum</code>的源文件</p>
-<pre><code>$ vim /etc/yum.repos.d/jenkins.repo</code></pre><p> 在 <code>jenkins.repo</code>中加入以下内容：</p>
-<pre><code>[jenkins]
-name=Jenkins
-baseurl=http://pkg.jenkins-ci.org/redhat
-gpgcheck=1</code></pre></li>
+<pre><code> $ vim /etc/yum.repos.d/jenkins.repo</code></pre><p> 在 <code>jenkins.repo</code>中加入以下内容：</p>
+<pre><code> [jenkins]
+ name=Jenkins
+ baseurl=http://pkg.jenkins-ci.org/redhat
+ gpgcheck=1</code></pre></li>
 <li><p><code>rpm</code>增加<code>jenkins</code>源的<code>key</code></p>
-<pre><code>$ sudo rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key</code></pre></li>
+<pre><code>  $ sudo rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key</code></pre></li>
 <li><p>安装 <code>jenkins</code></p>
-<pre><code>$ sudo yum install jenkins</code></pre></li>
+<pre><code>  $ sudo yum install jenkins</code></pre></li>
 <li><p>安装成功</p>
 <p>  ![截图 2016-04-26 09时45分01秒](<a href="https://o449xphwj.qnssl.com/2016-04-26-截图" target="_blank" rel="noopener">https://o449xphwj.qnssl.com/2016-04-26-截图</a> 2016-04-26 09时45分01秒.jpg)</p>
 </li>
 <li><p>配置Jenkins文件<br>  主要可以配置<code>jenkins</code>的运行端口和监听端口，以及启动用户，配置文件地址为<code>/etc/sysconfig/jenkins</code>，下面为主要修改内容：</p>
-  <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/sysconfig/jenkins</span><br><span class="line"><span class="comment"># 修改启动用户为root,默认为jenkins</span></span><br><span class="line">JENKINS_USER=<span class="string">"root"</span></span><br><span class="line"><span class="comment"># 修改运行端口为9999，默认为8080</span></span><br><span class="line">JENKINS_PORT=<span class="string">"9999"</span></span><br></pre></td></tr></table></figure>
-</li>
+<pre><code>  $ sudo vim /etc/sysconfig/jenkins
+  # 修改启动用户为root,默认为jenkins
+  JENKINS_USER=&quot;root&quot;
+  # 修改运行端口为9999，默认为8080
+  JENKINS_PORT=&quot;9999&quot;</code></pre></li>
 <li><p>启动<code>jenkins</code></p>
-  <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="built_in"> service </span>jenkins start</span><br></pre></td></tr></table></figure>
-
-</li>
+<pre><code>  sudo service jenkins start</code></pre></li>
 </ul>
 <h3 id="配置Jenkins"><a href="#配置Jenkins" class="headerlink" title="配置Jenkins"></a>配置<code>Jenkins</code></h3><ul>
 <li><p>打开<code>Jenkins</code>页面</p>
@@ -727,7 +728,10 @@ Jenkins 是一个开源项目，提供了一种易于使用的持续集成系统
 效果图:
 
 
-部分代码:设置滑动代理123456789101112131415
+部分代码:设置滑动代理/**
+ 设置滑动代理
+
+ - param
                         
                     </div>
                     <div class="publish-info">

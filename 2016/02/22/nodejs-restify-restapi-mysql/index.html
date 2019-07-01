@@ -31,7 +31,7 @@ restify是一个基于Nodejs的REST应用框架，支持服务器端和客户端
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -440,59 +440,230 @@ restify是一个基于Nodejs的REST应用框架，支持服务器端和客户端
 <h4 id="restify安装"><a href="#restify安装" class="headerlink" title="restify安装"></a>restify安装</h4><ul>
 <li>新建项目</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir nodejs_restify</span><br><span class="line">cd nodejs_restify</span><br><span class="line"></span><br><span class="line">npm install restify</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">mkdir nodejs_restify
+cd nodejs_restify
 
+npm install restify</code></pre>
 <p>出现以下内容表示安装成功</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">restify@4.0.4 ../../../../node_modules/restify</span><br><span class="line">├── assert-plus@0.1.5</span><br><span class="line">├── tunnel-agent@0.4.2</span><br><span class="line">├── escape-regexp-component@1.0.2</span><br><span class="line">├── keep-alive-agent@0.0.1</span><br><span class="line">├── negotiator@0.5.3</span><br><span class="line">├── mime@1.3.4</span><br><span class="line">├── lru-cache@2.7.3</span><br><span class="line">├── formidable@1.0.17</span><br><span class="line">├── node-uuid@1.4.7</span><br><span class="line">├── qs@3.1.0</span><br><span class="line">├── semver@4.3.6</span><br><span class="line">├── spdy@1.32.5</span><br><span class="line">├── once@1.3.3 (wrappy@1.0.1)</span><br><span class="line">├── http-signature@0.11.0 (ctype@0.5.3, asn1@0.1.11)</span><br><span class="line">├── verror@1.6.1 (core-util-is@1.0.2, extsprintf@1.2.0)</span><br><span class="line">├── vasync@1.6.3 (verror@1.6.0)</span><br><span class="line">├── backoff@2.4.1 (precond@0.2.3)</span><br><span class="line">├── csv@0.4.6 (csv-generate@0.0.6, csv-stringify@0.0.8, stream-transform@0.1.1, csv-parse@1.0.1)</span><br><span class="line">├── bunyan@1.7.0 (safe-json-stringify@1.0.3, moment@2.11.2, mv@2.1.1)</span><br><span class="line">└── dtrace-provider@0.6.0 (nan@2.2.0)</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">restify@4.0.4 ../../../../node_modules/restify
+├── assert-plus@0.1.5
+├── tunnel-agent@0.4.2
+├── escape-regexp-component@1.0.2
+├── keep-alive-agent@0.0.1
+├── negotiator@0.5.3
+├── mime@1.3.4
+├── lru-cache@2.7.3
+├── formidable@1.0.17
+├── node-uuid@1.4.7
+├── qs@3.1.0
+├── semver@4.3.6
+├── spdy@1.32.5
+├── once@1.3.3 (wrappy@1.0.1)
+├── http-signature@0.11.0 (ctype@0.5.3, asn1@0.1.11)
+├── verror@1.6.1 (core-util-is@1.0.2, extsprintf@1.2.0)
+├── vasync@1.6.3 (verror@1.6.0)
+├── backoff@2.4.1 (precond@0.2.3)
+├── csv@0.4.6 (csv-generate@0.0.6, csv-stringify@0.0.8, stream-transform@0.1.1, csv-parse@1.0.1)
+├── bunyan@1.7.0 (safe-json-stringify@1.0.3, moment@2.11.2, mv@2.1.1)
+└── dtrace-provider@0.6.0 (nan@2.2.0)</code></pre>
 <ul>
 <li>创建rest服务</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch app.js</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">touch app.js</code></pre>
 <ul>
 <li>app.js内容</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var restify = require('restify');</span><br><span class="line"></span><br><span class="line">function respond(req, res, next) &#123;</span><br><span class="line">  res.send('hello ' + req.params.name);</span><br><span class="line">  next();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var server = restify.createServer(&#123;</span><br><span class="line">   </span><br><span class="line">   name: 'ds_api',</span><br><span class="line">  version: '1.0.0'</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.get('/hello/:name', respond);</span><br><span class="line">server.head('/hello/:name', respond);</span><br><span class="line"></span><br><span class="line">server.listen(8081, function() &#123;</span><br><span class="line">  console.log('%s listening at %s', server.name, server.url);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">var restify = require('restify');
 
+function respond(req, res, next) {
+  res.send('hello ' + req.params.name);
+  next();
+}
+
+var server = restify.createServer({
+
+   name: 'ds_api',
+  version: '1.0.0'
+});
+
+server.get('/hello/:name', respond);
+server.head('/hello/:name', respond);
+
+server.listen(8081, function() {
+  console.log('%s listening at %s', server.name, server.url);
+});</code></pre>
 <ul>
 <li>启动服务</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node app.js</span><br><span class="line"></span><br><span class="line">listening at http://[::]:8081</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">node app.js
 
+listening at http://[::]:8081</code></pre>
 <ul>
 <li>使用<code>curl</code>测试</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">curl -is http://localhost:8081/hello/mark</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 12</span><br><span class="line">Date: Mon, 22 Feb 2016 06:57:42 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">"hello mark"</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">curl -is http://localhost:8081/hello/mark
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 12
+Date: Mon, 22 Feb 2016 06:57:42 GMT
+Connection: keep-alive
 
+"hello mark"</code></pre>
 <p>OK,我们创建了一个8080端口的rest服务，包括<code>/hello/:name</code>接口.<br>更多内容可以访问<a href="http://restify.com/" target="_blank" rel="noopener">API DOCUMENTATION</a></p>
 <h4 id="Mysql服务"><a href="#Mysql服务" class="headerlink" title="Mysql服务"></a>Mysql服务</h4><ul>
 <li>安装mysql</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install felixge/node-mysql</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">npm install felixge/node-mysql</code></pre>
 <ul>
 <li>在<code>app.js</code>创建服务</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 连接mysql</span></span><br><span class="line"><span class="keyword">var</span> mysql = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</span><br><span class="line"><span class="keyword">var</span> conn = mysql.createConnection(&#123;</span><br><span class="line">    host: ‘ip’,</span><br><span class="line">    user: ‘user’,</span><br><span class="line">    password: ‘pasw’,</span><br><span class="line">    database:<span class="string">'ds_video'</span>,</span><br><span class="line">    port: <span class="number">3306</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<ul>
+<pre><code>// 连接mysql
+var mysql = require(&#39;mysql&#39;);
+var conn = mysql.createConnection({
+    host: ‘ip’,
+    user: ‘user’,
+    password: ‘pasw’,
+    database:&#39;ds_video&#39;,
+    port: 3306
+});</code></pre><ul>
 <li>重写<a href="https://github.com/doushiDev/ds_ios" target="_blank" rel="noopener">逗视</a>获取视频的接口</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">server.get('queryListVideo/:vid/:count/:type/:userId',function respond(req, res, next) &#123;</span><br><span class="line"> </span><br><span class="line"> 	conn.query( &#123;</span><br><span class="line"></span><br><span class="line">		 sql: 'select distinct v.title as title,v.id,v.url as videoUrl ,v.pic,v.type,v.createTime as pushTime ,'+</span><br><span class="line">		</span><br><span class="line">		'(select count(*) from `tb_user_video` tub WHERE tub.`status` = 1 AND tub.userId = ? AND tub.videoId = v.id) as isCollectStatus'+</span><br><span class="line">		</span><br><span class="line">		' from `tb_video` v where'+</span><br><span class="line">		' v.title != ""   AND v.title not like "%#%" AND v.title not like "%@%" AND v.title not like "%微%"  '+</span><br><span class="line">		' AND v.title not like "%秒拍%"  AND v.title not like "%号%" '+</span><br><span class="line">		' AND v.title not like "%美拍%"   '+</span><br><span class="line">		</span><br><span class="line">		' AND type = ? '+</span><br><span class="line"></span><br><span class="line">		'ORDER BY id DESC LIMIT ?' ,</span><br><span class="line">		values: [req.params.userId,req.params.type,parseInt(req.params.count)]</span><br><span class="line">	&#125;,</span><br><span class="line"></span><br><span class="line">	 function(err, rows, fields) &#123;</span><br><span class="line">    if (err) throw err; </span><br><span class="line">        console.log('The title is: ', title = rows[0].title); </span><br><span class="line">    	res.send(200, res.json(rows));</span><br><span class="line"></span><br><span class="line">	&#125;);  </span><br><span class="line">   return next();</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">server.get('queryListVideo/:vid/:count/:type/:userId',function respond(req, res, next) {
 
+     conn.query( {
+
+         sql: 'select distinct v.title as title,v.id,v.url as videoUrl ,v.pic,v.type,v.createTime as pushTime ,'+
+
+        '(select count(*) from `tb_user_video` tub WHERE tub.`status` = 1 AND tub.userId = ? AND tub.videoId = v.id) as isCollectStatus'+
+
+        ' from `tb_video` v where'+
+        ' v.title != ""   AND v.title not like "%#%" AND v.title not like "%@%" AND v.title not like "%微%"  '+
+        ' AND v.title not like "%秒拍%"  AND v.title not like "%号%" '+
+        ' AND v.title not like "%美拍%"   '+
+
+        ' AND type = ? '+
+
+        'ORDER BY id DESC LIMIT ?' ,
+        values: [req.params.userId,req.params.type,parseInt(req.params.count)]
+    },
+
+     function(err, rows, fields) {
+    if (err) throw err; 
+        console.log('The title is: ', title = rows[0].title); 
+        res.send(200, res.json(rows));
+
+    });  
+   return next();
+ });</code></pre>
 <p>创建了<code>queryListVideo</code>服务，<code>/:vid/:count/:type/:userId</code> 参数，</p>
 <p><code>:vid</code>格式传递参数，</p>
 <p><code>req.params.vid</code>获取参数值</p>
 <p><code>res.json(rows)</code> 数据json格式输出</p>
 <p><code>res.send(200, res.json(rows));</code> 服务返回值 <code>200</code>HTTP状态码，<code>res.json(rows)</code>数据</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">conn.query( &#123; </span><br><span class="line">     sql:  ’sql语句 ？’,</span><br><span class="line">     values: [] // ? 填充值</span><br><span class="line">   &#125;,</span><br><span class="line">   </span><br><span class="line">   function(err, rows, fields) &#123; //数据库返回数据</span><br><span class="line">   if (err) throw err;  </span><br><span class="line">       res.send(200, res.json(rows));</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell"> conn.query( { 
+      sql:  ’sql语句 ？’,
+      values: [] // ? 填充值
+    },
 
+    function(err, rows, fields) { //数据库返回数据
+    if (err) throw err;  
+        res.send(200, res.json(rows));
+    }); </code></pre>
 <p>OK，我们测试一下吧！</p>
 <p>服务地址：<code>http://127.0.0.1:8081/queryListVideo/0/10/2/1</code></p>
 <p>返回内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "我也是醉了",</span><br><span class="line">    "id": 37729,</span><br><span class="line">    "videoUrl": "http://mvvideo2.meitudata.com/56c8a0c08e10d5457.mp4",</span><br><span class="line">    "pic": "http://mvimg1.meitudata.com/56c8a0bfef7c11168.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T18:11:33.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "女神如此难追",</span><br><span class="line">    "id": 37727,</span><br><span class="line">    "videoUrl": "http://mvvideo2.meitudata.com/56c7de946f8bb3420.mp4",</span><br><span class="line">    "pic": "http://mvimg11.meitudata.com/56c8150c4fe9d9762.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T18:11:32.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "一个疯子+一个傻子=两张大饼脸️精彩活动️问：视频中我说了几个啥玩意儿完全即兴某人还不知道规则",</span><br><span class="line">    "id": 37726,</span><br><span class="line">    "videoUrl": "http://mvvideo1.meitudata.com/56c8a0186f59d9869.mp4",</span><br><span class="line">    "pic": "http://mvimg2.meitudata.com/56c8a10eaa5394719.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T18:11:32.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "爆笑歌词梗",</span><br><span class="line">    "id": 37704,</span><br><span class="line">    "videoUrl": "http://mvvideo1.meitudata.com/56c0438416f2a3712.mp4",</span><br><span class="line">    "pic": "http://mvimg10.meitudata.com/56c832793e9705833.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T17:14:14.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "情感专线-拜金女的那些事儿",</span><br><span class="line">    "id": 37701,</span><br><span class="line">    "videoUrl": "http://gslb.miaopai.com/stream/Lqn~dQ1tbuJ5KNkc~LAG1A__.m3u8",</span><br><span class="line">    "pic": "http://wsacdn3.miaopai.com/stream/Lqn~dQ1tbuJ5KNkc~LAG1A___m.jpg",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T17:14:13.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "一网友说她家鹦鹉笑起来好像她奶奶[笑cry]",</span><br><span class="line">    "id": 37696,</span><br><span class="line">    "videoUrl": "http://gslb.miaopai.com/stream/59hdWRg61qsMMwvT5BXPNg__.mp4?vend=miaopai&amp;59hdWRg61qsMMwvT5BXPNg__.mp4miaopai",</span><br><span class="line">    "pic": "http://wsacdn1.miaopai.com/stream/59hdWRg61qsMMwvT5BXPNg___tmp_11_363_.png",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T17:14:11.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "捉迷藏1 这当爹的心太大了吧！这不摆明了坑儿子么？！",</span><br><span class="line">    "id": 37681,</span><br><span class="line">    "videoUrl": "http://gslb.miaopai.com/stream/fKPmQViX6eytWcD6XxR2Yw__.mp4?vend=miaopai&amp;fKPmQViX6eytWcD6XxR2Yw__.mp4miaopai",</span><br><span class="line">    "pic": "http://wsqncdn.miaopai.com/stream/fKPmQViX6eytWcD6XxR2Yw___m.jpg",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T16:12:51.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "聚会上最装逼的人",</span><br><span class="line">    "id": 37664,</span><br><span class="line">    "videoUrl": "http://mvvideo1.meitudata.com/56c7fbce28caf6036.mp4",</span><br><span class="line">    "pic": "http://mvimg1.meitudata.com/56c703002a0dc7724.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T15:22:30.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "现在的女生真的很现实",</span><br><span class="line">    "id": 37659,</span><br><span class="line">    "videoUrl": "http://mvvideo2.meitudata.com/56c87dd4057812379.mp4",</span><br><span class="line">    "pic": "http://mvimg2.meitudata.com/56c87ded57b056131.jpg!thumb320",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T15:22:26.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    "title": "断奶篇-唱回到过去",</span><br><span class="line">    "id": 37658,</span><br><span class="line">    "videoUrl": "http://gslb.miaopai.com/stream/aeNf6EQmnzUo4J22Ms~Tfg__.mp4?vend=miaopai&amp;aeNf6EQmnzUo4J22Ms~Tfg__.mp4miaopai",</span><br><span class="line">    "pic": "http://wsqncdn.miaopai.com/stream/aeNf6EQmnzUo4J22Ms~Tfg___m.jpg",</span><br><span class="line">    "type": 2,</span><br><span class="line">    "pushTime": "2016-02-20T15:22:25.000Z",</span><br><span class="line">    "isCollectStatus": 0</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">[
+  {
+    "title": "我也是醉了",
+    "id": 37729,
+    "videoUrl": "http://mvvideo2.meitudata.com/56c8a0c08e10d5457.mp4",
+    "pic": "http://mvimg1.meitudata.com/56c8a0bfef7c11168.jpg!thumb320",
+    "type": 2,
+    "pushTime": "2016-02-20T18:11:33.000Z",
+    "isCollectStatus": 0
+  },
+  {
+    "title": "女神如此难追",
+    "id": 37727,
+    "videoUrl": "http://mvvideo2.meitudata.com/56c7de946f8bb3420.mp4",
+    "pic": "http://mvimg11.meitudata.com/56c8150c4fe9d9762.jpg!thumb320",
+    "type": 2,
+    "pushTime": "2016-02-20T18:11:32.000Z",
+    "isCollectStatus": 0
+  },
+  {
+    "title": "一个疯子+一个傻子=两张大饼脸️精彩活动️问：视频中我说了几个啥玩意儿完全即兴某人还不知道规则",
+    "id": 37726,
+    "videoUrl": "http://mvvideo1.meitudata.com/56c8a0186f59d9869.mp4",
+    "pic": "http://mvimg2.meitudata.com/56c8a10eaa5394719.jpg!thumb320",
+    "type": 2,
+    "pushTime": "2016-02-20T18:11:32.000Z",
+    "isCollectStatus": 0
+  },
+  {
+    "title": "爆笑歌词梗",
+    "id": 37704,
+    "videoUrl": "http://mvvideo1.meitudata.com/56c0438416f2a3712.mp4",
+    "pic": "http://mvimg10.meitudata.com/56c832793e9705833.jpg!thumb320",
+    "type": 2,
+    "pushTime": "2016-02-20T17:14:14.000Z",
+    "isCollectStatus": 0
+  },
+  {
+    "title": "情感专线-拜金女的那些事儿",
+    "id": 37701,
+    "videoUrl": "http://gslb.miaopai.com/stream/Lqn~dQ1tbuJ5KNkc~LAG1A__.m3u8",
+    "pic": "http://wsacdn3.miaopai.com/stream/Lqn~dQ1tbuJ5KNkc~LAG1A___m.jpg",
+    "type": 2,
+    "pushTime": "2016-02-20T17:14:13.000Z",
+    "isCollectStatus": 0
+  },
+  {
+    "title": "一网友说她家鹦鹉笑起来好像她奶奶[笑cry]",
+    "id": 37696,
+    "videoUrl": "http://gslb.miaopai.com/stream/59hdWRg61qsMMwvT5BXPNg__.mp4?vend=miaopai&59hdWRg61qsMMwvT5BXPNg__.mp4miaopai",
+    "pic": "http://wsacdn1.miaopai.com/stream/59hdWRg61qsMMwvT5BXPNg___tmp_11_363_.png",
+    "type": 2,
+    "pushTime": "2016-02-20T17:14:11.000Z",
+    "isCollectStatus": 0
+  },
+  {
+    "title": "捉迷藏1 这当爹的心太大了吧！这不摆明了坑儿子么？！",
+    "id": 37681,
+    "videoUrl": "http://gslb.miaopai.com/stream/fKPmQViX6eytWcD6XxR2Yw__.mp4?vend=miaopai&fKPmQViX6eytWcD6XxR2Yw__.mp4miaopai",
+    "pic": "http://wsqncdn.miaopai.com/stream/fKPmQViX6eytWcD6XxR2Yw___m.jpg",
+    "type": 2,
+    "pushTime": "2016-02-20T16:12:51.000Z",
+    "isCollectStatus": 0
+  },
+  {
+    "title": "聚会上最装逼的人",
+    "id": 37664,
+    "videoUrl": "http://mvvideo1.meitudata.com/56c7fbce28caf6036.mp4",
+    "pic": "http://mvimg1.meitudata.com/56c703002a0dc7724.jpg!thumb320",
+    "type": 2,
+    "pushTime": "2016-02-20T15:22:30.000Z",
+    "isCollectStatus": 0
+  },
+  {
+    "title": "现在的女生真的很现实",
+    "id": 37659,
+    "videoUrl": "http://mvvideo2.meitudata.com/56c87dd4057812379.mp4",
+    "pic": "http://mvimg2.meitudata.com/56c87ded57b056131.jpg!thumb320",
+    "type": 2,
+    "pushTime": "2016-02-20T15:22:26.000Z",
+    "isCollectStatus": 0
+  },
+  {
+    "title": "断奶篇-唱回到过去",
+    "id": 37658,
+    "videoUrl": "http://gslb.miaopai.com/stream/aeNf6EQmnzUo4J22Ms~Tfg__.mp4?vend=miaopai&aeNf6EQmnzUo4J22Ms~Tfg__.mp4miaopai",
+    "pic": "http://wsqncdn.miaopai.com/stream/aeNf6EQmnzUo4J22Ms~Tfg___m.jpg",
+    "type": 2,
+    "pushTime": "2016-02-20T15:22:25.000Z",
+    "isCollectStatus": 0
+  }
+]</code></pre>
 <p>ðð完成了今天的任务了。</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>我们初步学会了创建<code>REST API</code>服务，在<code>node.js</code>中连接<code>mysql</code>以及<code>sql</code>的使用。但是这样的代码还有很多需要改进的地方，这是我们下一步要做的。</p>
 <blockquote>

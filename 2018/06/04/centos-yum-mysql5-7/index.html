@@ -5,10 +5,8 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Centos6.5 yum 安装 Mysql5.7, itjh">
-    <meta name="description" content="Centos6.5 yum 安装 Mysql5.7Step1: 检测系统是否自带安装mysql1yum list installed | grep mysql
-
-
-Step2: 删除系统自带的mysql及其依赖 1yum -y remove">
+    <meta name="description" content="Centos6.5 yum 安装 Mysql5.7Step1: 检测系统是否自带安装mysqlyum list installed | grep mysql
+Step2: 删除系统自带的mysql及其依赖 yum -y remove mys">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -31,7 +29,7 @@ Step2: 删除系统自带的mysql及其依赖 1yum -y remove">
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -407,36 +405,29 @@ Step2: 删除系统自带的mysql及其依赖 1yum -y remove">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Centos6-5-yum-安装-Mysql5-7"><a href="#Centos6-5-yum-安装-Mysql5-7" class="headerlink" title="Centos6.5 yum 安装 Mysql5.7"></a>Centos6.5 yum 安装 Mysql5.7</h2><h4 id="Step1-检测系统是否自带安装mysql"><a href="#Step1-检测系统是否自带安装mysql" class="headerlink" title="Step1: 检测系统是否自带安装mysql"></a>Step1: 检测系统是否自带安装mysql</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">list</span> installed | <span class="keyword">grep</span> mysql</span><br></pre></td></tr></table></figure>
+                <h2 id="Centos6-5-yum-安装-Mysql5-7"><a href="#Centos6-5-yum-安装-Mysql5-7" class="headerlink" title="Centos6.5 yum 安装 Mysql5.7"></a>Centos6.5 yum 安装 Mysql5.7</h2><h4 id="Step1-检测系统是否自带安装mysql"><a href="#Step1-检测系统是否自带安装mysql" class="headerlink" title="Step1: 检测系统是否自带安装mysql"></a>Step1: 检测系统是否自带安装mysql</h4><pre><code>yum list installed | grep mysql</code></pre><a id="more"></a>
+<h4 id="Step2-删除系统自带的mysql及其依赖"><a href="#Step2-删除系统自带的mysql及其依赖" class="headerlink" title="Step2: 删除系统自带的mysql及其依赖"></a>Step2: 删除系统自带的mysql及其依赖</h4><pre><code> yum -y remove mysql-libs.x86_64</code></pre><h4 id="Step3-给CentOS添加rpm源，并且选择较新的源"><a href="#Step3-给CentOS添加rpm源，并且选择较新的源" class="headerlink" title="Step3: 给CentOS添加rpm源，并且选择较新的源"></a>Step3: 给CentOS添加rpm源，并且选择较新的源</h4><pre><code>wget dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+yum localinstall mysql-community-release-el6-5.noarch.rpm
+yum repolist all | grep mysql
+yum-config-manager --disable mysql55-community
+yum-config-manager --disable mysql56-community
+yum-config-manager --enable mysql57-community-dmr
+yum repolist enabled | grep mysql
+</code></pre><p><code>yum-config-manager</code>命令安装: <code>yum -y install yum-utils</code></p>
+<h4 id="Step4-安装mysql-服务器"><a href="#Step4-安装mysql-服务器" class="headerlink" title="Step4:安装mysql 服务器"></a>Step4:安装mysql 服务器</h4><pre><code>yum install mysql-community-server</code></pre><h4 id="Step5-启动mysql"><a href="#Step5-启动mysql" class="headerlink" title="Step5: 启动mysql"></a>Step5: 启动mysql</h4><pre><code> service mysqld start</code></pre><h5 id="设置编码"><a href="#设置编码" class="headerlink" title="设置编码"></a>设置编码</h5><p>修改文件 </p>
+<pre><code>vim /etc/my.cnf
 
-<a id="more"></a>
-<h4 id="Step2-删除系统自带的mysql及其依赖"><a href="#Step2-删除系统自带的mysql及其依赖" class="headerlink" title="Step2: 删除系统自带的mysql及其依赖"></a>Step2: 删除系统自带的mysql及其依赖</h4> <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="builtin-name">remove</span> mysql-libs.x86_64</span><br></pre></td></tr></table></figure>
+[client]  
+default-character-set=utf8mb4  
 
-
-<h4 id="Step3-给CentOS添加rpm源，并且选择较新的源"><a href="#Step3-给CentOS添加rpm源，并且选择较新的源" class="headerlink" title="Step3: 给CentOS添加rpm源，并且选择较新的源"></a>Step3: 给CentOS添加rpm源，并且选择较新的源</h4><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget dev<span class="variable">.mysql</span><span class="variable">.com</span>/get/mysql-community-<span class="keyword">release</span>-el6-<span class="number">5</span><span class="variable">.noarch</span><span class="variable">.rpm</span></span><br><span class="line">yum localinstall mysql-community-<span class="keyword">release</span>-el6-<span class="number">5</span><span class="variable">.noarch</span><span class="variable">.rpm</span></span><br><span class="line">yum repolist all | grep mysql</span><br><span class="line">yum-<span class="keyword">config</span>-manager --<span class="keyword">disable</span> mysql55-community</span><br><span class="line">yum-<span class="keyword">config</span>-manager --<span class="keyword">disable</span> mysql56-community</span><br><span class="line">yum-<span class="keyword">config</span>-manager --enable mysql57-community-dmr</span><br><span class="line">yum repolist enabled | grep mysql</span><br></pre></td></tr></table></figure>
-
-<p><code>yum-config-manager</code>命令安装: <code>yum -y install yum-utils</code></p>
-<h4 id="Step4-安装mysql-服务器"><a href="#Step4-安装mysql-服务器" class="headerlink" title="Step4:安装mysql 服务器"></a>Step4:安装mysql 服务器</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> mysql-community-<span class="keyword">server</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="Step5-启动mysql"><a href="#Step5-启动mysql" class="headerlink" title="Step5: 启动mysql"></a>Step5: 启动mysql</h4> <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysqld <span class="literal">start</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="设置编码"><a href="#设置编码" class="headerlink" title="设置编码"></a>设置编码</h5><p>修改文件 </p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/my.cnf</span><br><span class="line"></span><br><span class="line">[<span class="meta">client</span>]  </span><br><span class="line"><span class="keyword">default</span>-character-<span class="keyword">set</span>=utf8mb4  </span><br><span class="line">  </span><br><span class="line">[<span class="meta">mysqld</span>]  </span><br><span class="line">character_set_server=utf8mb4</span><br></pre></td></tr></table></figure>
-
-<p>重启 <code>mysql</code></p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">service mysqld restart</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="Step6-查看mysql是否自启动-并且设置开启自启动"><a href="#Step6-查看mysql是否自启动-并且设置开启自启动" class="headerlink" title="Step6: 查看mysql是否自启动,并且设置开启自启动"></a>Step6: 查看mysql是否自启动,并且设置开启自启动</h4><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig <span class="comment">--list | grep mysqld</span></span><br><span class="line">chkconfig mysqld <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="查看密码"><a href="#查看密码" class="headerlink" title="查看密码"></a>查看密码</h5><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'temporary password'</span> /<span class="built_in">var</span>/<span class="keyword">log</span>/mysqld.<span class="keyword">log</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="Step7-mysql安全设置"><a href="#Step7-mysql安全设置" class="headerlink" title="Step7: mysql安全设置"></a>Step7: mysql安全设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql_secure_installation</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a)为root用户设置密码</span><br><span class="line">b)删除匿名账号</span><br><span class="line">c)取消root用户远程登录</span><br><span class="line">d)删除<span class="built_in">test</span>库和对<span class="built_in">test</span>库的访问权限</span><br><span class="line">e)刷新授权表使修改生效</span><br></pre></td></tr></table></figure>
-
-
+[mysqld]  
+character_set_server=utf8mb4  </code></pre><p>重启 <code>mysql</code></p>
+<pre><code>service mysqld restart</code></pre><h4 id="Step6-查看mysql是否自启动-并且设置开启自启动"><a href="#Step6-查看mysql是否自启动-并且设置开启自启动" class="headerlink" title="Step6: 查看mysql是否自启动,并且设置开启自启动"></a>Step6: 查看mysql是否自启动,并且设置开启自启动</h4><pre><code>chkconfig --list | grep mysqld
+chkconfig mysqld on</code></pre><h5 id="查看密码"><a href="#查看密码" class="headerlink" title="查看密码"></a>查看密码</h5><pre><code>grep &#39;temporary password&#39; /var/log/mysqld.log</code></pre><h4 id="Step7-mysql安全设置"><a href="#Step7-mysql安全设置" class="headerlink" title="Step7: mysql安全设置"></a>Step7: mysql安全设置</h4><pre><code>mysql_secure_installation</code></pre><pre><code>  a)为root用户设置密码
+  b)删除匿名账号
+  c)取消root用户远程登录
+  d)删除test库和对test库的访问权限
+  e)刷新授权表使修改生效</code></pre>
             </div>
             <hr/>
 
@@ -653,10 +644,8 @@ Step2: 删除系统自带的mysql及其依赖 1yum -y remove">
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Centos6.5 yum 安装 Mysql5.7Step1: 检测系统是否自带安装mysql1yum list installed | grep mysql
-
-
-Step2: 删除系统自带的mysql及其依赖 1yum -y remove
+                            Centos6.5 yum 安装 Mysql5.7Step1: 检测系统是否自带安装mysqlyum list installed | grep mysql
+Step2: 删除系统自带的mysql及其依赖 yum -y remove mys
                         
                     </div>
                     <div class="publish-info">

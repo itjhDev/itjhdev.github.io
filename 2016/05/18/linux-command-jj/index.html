@@ -5,10 +5,8 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Linux 常用命令 进阶 一, itjh">
-    <meta name="description" content="计算文件夹以及文件大小排序1for i in $(ls -l |grep &#39;^d&#39; |du -s * |sort -nr|awk &#39;&amp;#123;print $2&amp;#125;&#39;);do du -sh $i;done
-
-
-Centos6 防火墙">
+    <meta name="description" content="计算文件夹以及文件大小排序for i in $(ls -l |grep &amp;#39;^d&amp;#39; |du -s * |sort -nr|awk &amp;#39;{print $2}&amp;#39;);do du -sh $i;done
+Centos6 ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -31,7 +29,7 @@ Centos6 防火墙">
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -411,55 +409,26 @@ Centos6 防火墙">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="计算文件夹以及文件大小排序"><a href="#计算文件夹以及文件大小排序" class="headerlink" title="计算文件夹以及文件大小排序"></a>计算文件夹以及文件大小排序</h4><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="keyword">ls</span> -l |grep <span class="string">'^d'</span> |du -s * |<span class="keyword">sort</span> -nr|awk <span class="string">'&#123;print $2&#125;'</span>);<span class="keyword">do</span> du -sh $i;done</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://o449xphwj.qnssl.com/2016-05-18-14635655978068.jpg" alt></p>
+                <h4 id="计算文件夹以及文件大小排序"><a href="#计算文件夹以及文件大小排序" class="headerlink" title="计算文件夹以及文件大小排序"></a>计算文件夹以及文件大小排序</h4><pre><code>for i in $(ls -l |grep &#39;^d&#39; |du -s * |sort -nr|awk &#39;{print $2}&#39;);do du -sh $i;done</code></pre><p><img src="https://o449xphwj.qnssl.com/2016-05-18-14635655978068.jpg" alt></p>
 <h4 id="Centos6-防火墙配置"><a href="#Centos6-防火墙配置" class="headerlink" title="Centos6 防火墙配置"></a>Centos6 防火墙配置</h4><p>编辑 <code>/etc/sysconfig/iptables</code> 文件</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim <span class="regexp">/etc/</span>sysconfig<span class="regexp">/iptables</span></span><br></pre></td></tr></table></figure>
-
-<p>重启</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/iptables restart</span></span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
+<pre><code>vim /etc/sysconfig/iptables</code></pre><p>重启</p>
+<pre><code>/etc/init.d/iptables restart  </code></pre><a id="more"></a>
 
 <h4 id="Centos7-防火墙配置"><a href="#Centos7-防火墙配置" class="headerlink" title="Centos7 防火墙配置"></a>Centos7 防火墙配置</h4><ul>
 <li><p>启动</p>
-  <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="literal">start</span> firewalld</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<ul>
+<pre><code>  systemctl start firewalld</code></pre></li>
 <li><p>停止</p>
-  <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">stop</span> firewalld</span><br></pre></td></tr></table></figure>
-</li>
+<pre><code>  systemctl stop firewalld</code></pre></li>
 <li><p>添加端口</p>
-  <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd <span class="attribute">--zone</span>=public <span class="attribute">--add-port</span>=9080/tcp --permanent</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<ul>
+<pre><code>  firewall-cmd --zone=public --add-port=9080/tcp --permanent</code></pre></li>
 <li><p>重新加载</p>
-  <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">systemctl restart firewalld</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<ul>
+<pre><code>  systemctl restart firewalld</code></pre></li>
 <li><p>查看所有的端口</p>
-  <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-<span class="keyword">cmd</span><span class="bash"> --list-all</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
+<pre><code>  firewall-cmd --list-all</code></pre></li>
 </ul>
-<h4 id="scp-远程复制文件"><a href="#scp-远程复制文件" class="headerlink" title="scp 远程复制文件"></a>scp 远程复制文件</h4><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp test.txt root<span class="variable">@192</span>.<span class="number">168.1</span>.<span class="number">100</span><span class="symbol">:/home/test</span></span><br></pre></td></tr></table></figure>
-
-<p><code>test.txt</code>: 原服务器文件</p>
+<h4 id="scp-远程复制文件"><a href="#scp-远程复制文件" class="headerlink" title="scp 远程复制文件"></a>scp 远程复制文件</h4><pre><code>scp test.txt root@192.168.1.100:/home/test</code></pre><p><code>test.txt</code>: 原服务器文件</p>
 <p><code>root@192.168.1.100:/home/test</code>: 远程目录</p>
-<h4 id="netstat-查看服务器端口列表"><a href="#netstat-查看服务器端口列表" class="headerlink" title="netstat 查看服务器端口列表"></a>netstat 查看服务器端口列表</h4><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">netstat -tpnl</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://o449xphwj.qnssl.com/2016-05-18-14635658928487.jpg" alt></p>
+<h4 id="netstat-查看服务器端口列表"><a href="#netstat-查看服务器端口列表" class="headerlink" title="netstat 查看服务器端口列表"></a>netstat 查看服务器端口列表</h4><pre><code>netstat -tpnl</code></pre><p><img src="https://o449xphwj.qnssl.com/2016-05-18-14635658928487.jpg" alt></p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>一个高效率的命令, 会提高很大的工作效率. 但是在执行命令的时候要谨慎.</p>
 <p>未完待续…</p>
 

@@ -29,7 +29,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -429,24 +429,15 @@
 <p><code>ca_bundle.crt</code></p>
 <p><code>private.key</code></p>
 <p>Nginx 配置SSL</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssl on;</span><br><span class="line">ssl_certificate <span class="regexp">/data/</span>itjh_net<span class="regexp">/ssl/</span>sslforfree/cert_chain.crt;</span><br><span class="line">ssl_certificate_key <span class="regexp">/data/</span>itjh_net<span class="regexp">/ssl/</span>sslforfree/<span class="keyword">private</span>.key;</span><br></pre></td></tr></table></figure>
-
-<p><code>ssl_certificate</code>文件需要合并<code>ca_bundle.crt</code> + <code>ca_bundle.crt</code> 文件. 执行命令</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat certificate<span class="selector-class">.crt</span> ca_bundle<span class="selector-class">.crt</span> &gt;&gt; cert_chain.crt</span><br></pre></td></tr></table></figure>
-
-<p>⚠️合并以后的文件会出现下面的错误</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nginx:</span> [emerg] PEM_read_bio_X509_AUX(<span class="string">"/data/itjh_net/ssl/sslforfree/cert_chain.crt"</span>) failed (<span class="string">SSL:</span> <span class="string">error:</span><span class="number">0906</span><span class="string">D066:</span>PEM <span class="string">routines:</span><span class="string">PEM_read_bio:</span>bad end line)</span><br></pre></td></tr></table></figure>
-
-<p>这是因为<code>cert_chain.crt</code>文件有问题, 文件中有</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">END</span> <span class="comment">CERTIFICATE</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">BEGIN</span> <span class="comment">CERTIFICATE</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span></span><br></pre></td></tr></table></figure>
-
-<p>这样是错误的, 需要修改成</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">END</span> <span class="comment">CERTIFICATE</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">BEGIN</span> <span class="comment">CERTIFICATE</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span></span><br></pre></td></tr></table></figure>
-
-<p>然后保存, 重启<code>Nginx</code>.</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">service nginx restart</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="验证结果"><a href="#验证结果" class="headerlink" title="验证结果"></a>验证结果</h4><p>打开网站<a href="http://www.itjh.net" target="_blank" rel="noopener">IT江湖</a><code>www.itjh.net</code>.</p>
+<pre><code>ssl on;
+ssl_certificate /data/itjh_net/ssl/sslforfree/cert_chain.crt;
+ssl_certificate_key /data/itjh_net/ssl/sslforfree/private.key;</code></pre><p><code>ssl_certificate</code>文件需要合并<code>ca_bundle.crt</code> + <code>ca_bundle.crt</code> 文件. 执行命令</p>
+<pre><code>cat certificate.crt ca_bundle.crt &gt;&gt; cert_chain.crt</code></pre><p>⚠️合并以后的文件会出现下面的错误</p>
+<pre><code>nginx: [emerg] PEM_read_bio_X509_AUX(&quot;/data/itjh_net/ssl/sslforfree/cert_chain.crt&quot;) failed (SSL: error:0906D066:PEM routines:PEM_read_bio:bad end line)</code></pre><p>这是因为<code>cert_chain.crt</code>文件有问题, 文件中有</p>
+<pre><code>-----END CERTIFICATE----------BEGIN CERTIFICATE-----</code></pre><p>这样是错误的, 需要修改成</p>
+<pre><code>-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----</code></pre><p>然后保存, 重启<code>Nginx</code>.</p>
+<pre><code>service nginx restart</code></pre><h4 id="验证结果"><a href="#验证结果" class="headerlink" title="验证结果"></a>验证结果</h4><p>打开网站<a href="http://www.itjh.net" target="_blank" rel="noopener">IT江湖</a><code>www.itjh.net</code>.</p>
 <p>绿色的小图标又出现了. 好棒🍺🍺</p>
 <p><img src="https://o449xphwj.qnssl.com/2016-11-03-14781517295954.jpg" alt></p>
 

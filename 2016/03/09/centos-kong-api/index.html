@@ -34,7 +34,7 @@ Kong Server ：基于">
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -444,89 +444,170 @@ Kong Server ：基于">
 <p> <code>https://getkong.org/install/centos/#packages</code></p>
 <p> 下载的文件<code>kong-0.7.0.el6.noarch.rpm</code></p>
 <p> 执行命令安装</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh kong-0.7.0.el6.noarch.rpm</span><br></pre></td></tr></table></figure>
-
-
+<pre class=" language-shell"><code class="language-shell"> rpm -ivh kong-0.7.0.el6.noarch.rpm
+</code></pre>
+<pre class=" language-shell"><code class="language-shell"> $ sudo yum install epel-release
+ $ sudo yum install kong-0.7.0.*.noarch.rpm --nogpgcheck</code></pre>
+<blockquote>
+<p>如果出现 </p>
+</blockquote>
+<blockquote>
+<p>错误：Cannot retrieve metalink for repository: epel. Please verify its path and try again</p>
+</blockquote>
+<blockquote>
+<p>可以通过执行<font color="“red”"><code>yum --disablerepo=epel -y update  ca-certificates</code></font> 完美解决 🍺</p>
+</blockquote>
 </li>
-</ol>
-<pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install epel-release</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install kong-0.7.0.*.noarch.rpm --nogpgcheck</span></span><br></pre></td></tr></table></figure>
-
-&gt;如果出现 
-
-&gt; 错误：Cannot retrieve metalink for repository: epel. Please verify its path and try again
-
-&gt; 可以通过执行&lt;font color=“red”&gt;`yum --disablerepo=epel -y update  ca-certificates`&lt;/font&gt; 完美解决 🍺</code></pre><ol start="2">
 <li><p>启动</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">	[INFO] Kong 0.7.0</span><br><span class="line">[INFO] Using configuration: /etc/kong/kong.yml</span><br><span class="line">[INFO] Setting working directory to /usr/local/kong</span><br><span class="line">[INFO] database...........cassandra keyspace=kong ssl=verify=false enabled=false replication_factor=1 contact_points=ec2-52-5-200-155.compute-1.amazonaws.com:34977 replication_strategy=SimpleStrategy timeout=5000 data_centers=</span><br><span class="line">[INFO] Database not initialized. Running migrations...</span><br><span class="line">[INFO] Migrating core on keyspace "kong" (cassandra)</span><br><span class="line">[INFO] core migrated up to: 2015-01-12-175310_skeleton</span><br><span class="line">[INFO] core migrated up to: 2015-01-12-175310_init_schema</span><br><span class="line">[INFO] core migrated up to: 2015-11-23-817313_nodes</span><br><span class="line">[INFO] Migrating key-auth on keyspace "kong" (cassandra)</span><br><span class="line">[INFO] key-auth migrated up to: 2015-07-31-172400_init_keyauth</span><br><span class="line">[INFO] Migrating rate-limiting on keyspace "kong" (cassandra)</span><br><span class="line">[INFO] rate-limiting migrated up to: 2015-08-03-132400_init_ratelimiting</span><br><span class="line">[INFO] Migrating mashape-analytics on keyspace "kong" (cassandra)</span><br><span class="line">[INFO] mashape-analytics migrated up to: 2015-12-03-161400_mashape-analytics-config</span><br><span class="line">[INFO] Migrating acl on keyspace "kong" (cassandra)</span><br><span class="line">[INFO] acl migrated up to: 2015-08-25-841841_init_acl</span><br><span class="line">[INFO] Migrating oauth2 on keyspace "kong" (cassandra)</span><br><span class="line">[INFO] oauth2 migrated up to: 2015-08-03-132400_init_oauth2</span><br><span class="line">[INFO] oauth2 migrated up to: 2015-08-24-215800_cascade_delete_index</span><br><span class="line">[INFO] Migrating jwt on keyspace "kong" (cassandra)</span><br><span class="line">[INFO] jwt migrated up to: 2015-06-09-jwt-auth</span><br><span class="line">[INFO] Migrating basic-auth on keyspace "kong" (cassandra)</span><br><span class="line">[INFO] basic-auth migrated up to: 2015-08-03-132400_init_basicauth</span><br><span class="line">[INFO] Migrating response-ratelimiting on keyspace "kong" (cassandra)</span><br><span class="line">[INFO] response-ratelimiting migrated up to: 2015-08-21_init_response-rate-limiting</span><br><span class="line">[INFO] Migrating hmac-auth on keyspace "kong" (cassandra)</span><br><span class="line">[INFO] hmac-auth migrated up to: 2015-09-16-132400_init_hmacauth</span><br><span class="line">[INFO] dnsmasq............address=127.0.0.1:8053 dnsmasq=true port=8053</span><br><span class="line">[INFO] Leaving cluster..</span><br><span class="line">[INFO] nginx .............admin_api_listen=0.0.0.0:8001 proxy_listen=0.0.0.0:8000 proxy_listen_ssl=0.0.0.0:8443</span><br><span class="line">[OK] Started</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell"> [INFO] Kong 0.7.0
+[INFO] Using configuration: /etc/kong/kong.yml
+[INFO] Setting working directory to /usr/local/kong
+[INFO] database...........cassandra keyspace=kong ssl=verify=false enabled=false replication_factor=1 contact_points=ec2-52-5-200-155.compute-1.amazonaws.com:34977 replication_strategy=SimpleStrategy timeout=5000 data_centers=
+[INFO] Database not initialized. Running migrations...
+[INFO] Migrating core on keyspace "kong" (cassandra)
+[INFO] core migrated up to: 2015-01-12-175310_skeleton
+[INFO] core migrated up to: 2015-01-12-175310_init_schema
+[INFO] core migrated up to: 2015-11-23-817313_nodes
+[INFO] Migrating key-auth on keyspace "kong" (cassandra)
+[INFO] key-auth migrated up to: 2015-07-31-172400_init_keyauth
+[INFO] Migrating rate-limiting on keyspace "kong" (cassandra)
+[INFO] rate-limiting migrated up to: 2015-08-03-132400_init_ratelimiting
+[INFO] Migrating mashape-analytics on keyspace "kong" (cassandra)
+[INFO] mashape-analytics migrated up to: 2015-12-03-161400_mashape-analytics-config
+[INFO] Migrating acl on keyspace "kong" (cassandra)
+[INFO] acl migrated up to: 2015-08-25-841841_init_acl
+[INFO] Migrating oauth2 on keyspace "kong" (cassandra)
+[INFO] oauth2 migrated up to: 2015-08-03-132400_init_oauth2
+[INFO] oauth2 migrated up to: 2015-08-24-215800_cascade_delete_index
+[INFO] Migrating jwt on keyspace "kong" (cassandra)
+[INFO] jwt migrated up to: 2015-06-09-jwt-auth
+[INFO] Migrating basic-auth on keyspace "kong" (cassandra)
+[INFO] basic-auth migrated up to: 2015-08-03-132400_init_basicauth
+[INFO] Migrating response-ratelimiting on keyspace "kong" (cassandra)
+[INFO] response-ratelimiting migrated up to: 2015-08-21_init_response-rate-limiting
+[INFO] Migrating hmac-auth on keyspace "kong" (cassandra)
+[INFO] hmac-auth migrated up to: 2015-09-16-132400_init_hmacauth
+[INFO] dnsmasq............address=127.0.0.1:8053 dnsmasq=true port=8053
+[INFO] Leaving cluster..
+[INFO] nginx .............admin_api_listen=0.0.0.0:8001 proxy_listen=0.0.0.0:8000 proxy_listen_ssl=0.0.0.0:8443
+[OK] Started</code></pre>
 </li>
 </ol>
 <h4 id="安装-Cassandra"><a href="#安装-Cassandra" class="headerlink" title="安装 Cassandra"></a>安装 Cassandra</h4><ol>
 <li><p>下载<code>Cassandra</code> </p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget: http://mirrors.hust.edu.cn/apache/cassandra/3.3/apache-cassandra-3.3-bin.tar.gz</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell"> wget: http://mirrors.hust.edu.cn/apache/cassandra/3.3/apache-cassandra-3.3-bin.tar.gz</code></pre>
 </li>
 <li><p>安装<code>Cassandra</code></p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-cassandra-3.3-bin.tar.gz</span><br><span class="line">cd bin/</span><br></pre></td></tr></table></figure>
-
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">执行cassandra -f 后台启动</span><br><span class="line">./cassandra -f</span><br></pre></td></tr></table></figure>
-
-
+<pre class=" language-shell"><code class="language-shell"> tar -zxvf apache-cassandra-3.3-bin.tar.gz
+ cd bin/</code></pre>
+<pre class=" language-shell"><code class="language-shell"> 执行cassandra -f 后台启动
+ ./cassandra -f </code></pre>
+<blockquote>
+<p>在安装<code>cassandra</code>要升级<code>Python2.7</code>.</p>
+</blockquote>
+<blockquote>
+<p>执行<code>./cqlsh</code> 测试是否安装成功</p>
+</blockquote>
+<pre class=" language-shell"><code class="language-shell">   Connected to Test Cluster at 127.0.0.1:9042.
+  [cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]
+  Use HELP for help.
+  cqlsh>    </code></pre>
+<p>   恭喜你🍺 安装成功了 <code>9042</code>端口</p>
+<blockquote>
+<p>执行<code>./cqlsh</code> 出现下面的错误，需要安装<code>python ssl</code>模块</p>
+</blockquote>
+<blockquote>
+<pre class=" language-shell"><code class="language-shell">   [root@host-133-130-99-25 bin]# ./cqlsh
+Traceback (most recent call last):
+File "./cqlsh.py", line 152, in <module>
+ from cqlshlib import cql3handling, cqlhandling, pylexotron, sslhandling
+File "/home/soft/apache-cassandra-2.2.5/bin/../pylib/cqlshlib/sslhandling.py", line 20, in <module>
+ import ssl
+File "/usr/local/lib/python2.7/ssl.py", line 60, in <module>
+ import _ssl             # if we can't import it, let the error propagate
+ImportError: No module named _ssl</code></pre>
+</blockquote>
+<p> 参考: </p>
+<p>   <a href="http://www.cnblogs.com/yuechaotian/archive/2013/06/03/3115472.html" target="_blank" rel="noopener">python安装完毕后，提示找不到ssl模块的解决步骤</a></p>
+<p>   <a href="http://www.111cn.net/sys/CentOS/53297.htm" target="_blank" rel="noopener">CentOS yum安装或升级Python到2.7.5教程</a></p>
 </li>
 </ol>
-<pre><code>&gt; 在安装`cassandra`要升级`Python2.7`.
+<h4 id="配置Configure-Cassandra"><a href="#配置Configure-Cassandra" class="headerlink" title="配置Configure Cassandra"></a>配置Configure Cassandra</h4><p>编辑<code>/etc/kong/kong.yml</code>文件</p>
+<pre class=" language-shell"><code class="language-shell">Replace this in /etc/kong/kong.yml and continue installing Kong or onto the quickstart guide!
 
-&gt; 执行`./cqlsh` 测试是否安装成功
-&gt; 
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Connected to Test Cluster at 127.0.0.1:9042.</span><br><span class="line">  [cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]</span><br><span class="line">  Use HELP for help.</span><br><span class="line"><span class="meta">  cqlsh&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
-
-  恭喜你🍺 安装成功了 `9042`端口
-
-&gt; 执行`./cqlsh` 出现下面的错误，需要安装`python ssl`模块
-
-&gt; <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">	  [root@host-133-130-99-25 bin]# ./cqlsh</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File "./cqlsh.py", line 152, in &lt;module&gt;</span><br><span class="line">    from cqlshlib import cql3handling, cqlhandling, pylexotron, sslhandling</span><br><span class="line">  File "/home/soft/apache-cassandra-2.2.5/bin/../pylib/cqlshlib/sslhandling.py", line 20, in &lt;module&gt;</span><br><span class="line">    import ssl</span><br><span class="line">  File "/usr/local/lib/python2.7/ssl.py", line 60, in &lt;module&gt;</span><br><span class="line">    import _ssl             # if we can't import it, let the error propagate</span><br><span class="line">ImportError: No module named _ssl</span><br><span class="line">	  ``` </span><br><span class="line">	  </span><br><span class="line">	参考: </span><br><span class="line">	</span><br><span class="line">	  [python安装完毕后，提示找不到ssl模块的解决步骤](http://www.cnblogs.com/yuechaotian/archive/2013/06/03/3115472.html)</span><br><span class="line">	  </span><br><span class="line">	  [CentOS yum安装或升级Python到2.7.5教程](http://www.111cn.net/sys/CentOS/53297.htm)</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">		</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">### 配置Configure Cassandra</span></span></span><br><span class="line"></span><br><span class="line">编辑`/etc/kong/kong.yml`文件</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">Replace this in /etc/kong/kong.yml and continue installing Kong or onto the quickstart guide!</span><br><span class="line"></span><br><span class="line">database: cassandra</span><br><span class="line">cassandra:</span><br><span class="line">  contact_points:</span><br><span class="line">    - "127.0.0.1:9042"</span><br></pre></td></tr></table></figure></code></pre><h4 id="Kong添加Rest-Api"><a href="#Kong添加Rest-Api" class="headerlink" title="Kong添加Rest Api"></a>Kong添加Rest Api</h4><ol>
+database: cassandra
+cassandra:
+  contact_points:
+    - "127.0.0.1:9042"</code></pre>
+<h4 id="Kong添加Rest-Api"><a href="#Kong添加Rest-Api" class="headerlink" title="Kong添加Rest Api"></a>Kong添加Rest Api</h4><ol>
 <li><p>添加api </p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -i -X POST \</span></span><br><span class="line"> --url http://localhost:8001/apis/ \</span><br><span class="line"> --data 'name=mockbin' \ //自己的api name</span><br><span class="line"> --data 'upstream_url=http://mockbin.com/' \ //API地址</span><br><span class="line"> --data 'request_host=mockbin.com'  //API地址</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell"> $ curl -i -X POST \
+--url http://localhost:8001/apis/ \
+--data 'name=mockbin' \ //自己的api name
+--data 'upstream_url=http://mockbin.com/' \ //API地址
+--data 'request_host=mockbin.com'  //API地址</code></pre>
 <p> 成功 显示</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 201 Created</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  “request_host”: “mockbin.com”,</span><br><span class="line">  “upstream_url”: “http://mockbin.com/“,</span><br><span class="line">  “id”: “2eec1cb2-7093-411a-c14e-42e67142d2c4”,</span><br><span class="line">  “created_at”: 1428456369000,</span><br><span class="line">  “name”: “mockbin”</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell"> HTTP/1.1 201 Created
+ Content-Type: application/json
+ Connection: keep-alive
 
-
+ {
+   “request_host”: “mockbin.com”,
+   “upstream_url”: “http://mockbin.com/“,
+   “id”: “2eec1cb2-7093-411a-c14e-42e67142d2c4”,
+   “created_at”: 1428456369000,
+   “name”: “mockbin”
+ }</code></pre>
+<p> 使用<code>kong</code>作为代理请求API</p>
+<pre class=" language-shell"><code class="language-shell"> $ curl -i -X GET \
+   --url http://localhost:8000/ \
+  --header 'Host: mockbin.com'</code></pre>
+<p> <font color="“red”"><code>:8000</code></font> 端口代理</p>
 </li>
 </ol>
-<pre><code>使用`kong`作为代理请求API
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -i -X GET \</span></span><br><span class="line"> 	--url http://localhost:8000/ \</span><br><span class="line">	--header 'Host: mockbin.com'</span><br></pre></td></tr></table></figure>
-
-&lt;font color=“red”&gt;`:8000`&lt;/font&gt; 端口代理</code></pre><ol start="2">
+<ol start="2">
 <li><p>测试</p>
 <p> 访问<code>http://localhost:8000/</code>就可以访问到自己的API了。</p>
 </li>
 <li><p>Nginx配置SSL</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">	ssl on;</span><br><span class="line">ssl_certificate  /*.crt;</span><br><span class="line">ssl_certificate_key /*.key;</span><br><span class="line">ssl_session_timeout 5m;</span><br><span class="line">ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line">ssl_ciphers ALL:!ADH:!EXPORT56:-RC4+RSA:+HIGH:+MEDIUM:!EXP; ssl_prefer_server_ciphers on;</span><br></pre></td></tr></table></figure>
-
-
-
+<pre class=" language-shell"><code class="language-shell"> ssl on;
+ssl_certificate  /*.crt;
+ssl_certificate_key /*.key;
+ssl_session_timeout 5m;
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_ciphers ALL:!ADH:!EXPORT56:-RC4+RSA:+HIGH:+MEDIUM:!EXP; ssl_prefer_server_ciphers on;</code></pre>
 </li>
 </ol>
 <h4 id="Kong-API添加插件"><a href="#Kong-API添加插件" class="headerlink" title="Kong API添加插件"></a>Kong API添加插件</h4><ol>
 <li><p>添加 <code>key-auth</code> 插件 配置apikey</p>
 <p> 执行命令: <code>mockbin</code> -&gt; <code>api</code>名称</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST \</span><br><span class="line"> 	--url http://localhost:8001/apis/mockbin/plugins/ \</span><br><span class="line"> 	--data 'name=key-auth'</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell"> curl -i -X POST \
+   --url http://localhost:8001/apis/mockbin/plugins/ \
+   --data 'name=key-auth'</code></pre>
+<p> 添加成功显示:</p>
+<pre class=" language-shell"><code class="language-shell"> HTTP/1.1 201 Created
+ Date: Tue, 08 Mar 2016 08:07:51 GMT
+ Content-Type: application/json; charset=utf-8
+ Transfer-Encoding: chunked
+ Connection: keep-alive
+ Access-Control-Allow-Origin: *
+ Server: kong/0.7.0
 
-
+ {"api_id":"413fc8b3-4c45-43eb-a3c1-17f9325d5527","id":"4706cc84-    b97a-48c4-90eb-e8ec8491d3d7","created_at":    1457424471000,"enabled":true,"name":"key-auth","config":{"key_names":    ["apikey"],"hide_credentials"</code></pre>
+<p> 🍺OK，成功添加<code>key-auth</code>插件</p>
 </li>
-</ol>
-<pre><code>添加成功显示:
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">	HTTP/1.1 201 Created</span><br><span class="line">	Date: Tue, 08 Mar 2016 08:07:51 GMT</span><br><span class="line">	Content-Type: application/json; charset=utf-8</span><br><span class="line">	Transfer-Encoding: chunked</span><br><span class="line">	Connection: keep-alive</span><br><span class="line">	Access-Control-Allow-Origin: *</span><br><span class="line">	Server: kong/0.7.0</span><br><span class="line"></span><br><span class="line">	&#123;"api_id":"413fc8b3-4c45-43eb-a3c1-17f9325d5527","id":"4706cc84-	b97a-48c4-90eb-e8ec8491d3d7","created_at":	1457424471000,"enabled":true,"name":"key-auth","config":&#123;"key_names":	["apikey"],"hide_credentials"</span><br><span class="line">	```	</span><br><span class="line">	🍺OK，成功添加`key-auth`插件</span><br><span class="line">	</span><br><span class="line">2. API 配置访问权限 </span><br><span class="line"></span><br><span class="line">	执行命令: `username=Slj` -&gt; `Slj`用户</span><br><span class="line">	</span><br><span class="line">	```shell</span><br><span class="line">	--接口添加用户控制</span><br><span class="line">	curl -i -X POST \</span><br><span class="line">  	--url http://localhost:8001/consumers/ \</span><br><span class="line"> 	--data "username=Slj"</span><br></pre></td></tr></table></figure>
-
-
-`Slj`用户配置apikey
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST \</span><br><span class="line"> 	--url http://localhost:8001/consumers/Slj/key-auth/ \</span><br><span class="line"> 	--data 'key=9eGpzqh4U3qMMuSk'</span><br></pre></td></tr></table></figure>
-
-
-🍺第一个插件安装成功了, 我们测试一下吧</code></pre><ol start="3">
+<li><p>API 配置访问权限 </p>
+<p> 执行命令: <code>username=Slj</code> -&gt; <code>Slj</code>用户</p>
+<pre class=" language-shell"><code class="language-shell"> --接口添加用户控制
+ curl -i -X POST \
+   --url http://localhost:8001/consumers/ \
+  --data "username=Slj"</code></pre>
+<p> <code>Slj</code>用户配置apikey</p>
+<pre class=" language-shell"><code class="language-shell"> curl -i -X POST \
+   --url http://localhost:8001/consumers/Slj/key-auth/ \
+   --data 'key=9eGpzqh4U3qMMuSk'</code></pre>
+<p> 🍺第一个插件安装成功了, 我们测试一下吧</p>
+</li>
 <li><p>测试API 访问权限</p>
 <p> 在<code>Headers</code>中添加 <code>apikey</code>值</p>
 <p> <img src="https://dn-itjhcdn.qbox.me/kong%201.jpg" alt></p>

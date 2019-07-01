@@ -31,7 +31,7 @@ Git版本: git version ">
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -438,73 +438,103 @@ Git版本: git version ">
 
 <h5 id="在安装git-服务器之前安装一些必要的服务"><a href="#在安装git-服务器之前安装一些必要的服务" class="headerlink" title="在安装git 服务器之前安装一些必要的服务"></a>在安装<code>git</code> 服务器之前安装一些必要的服务</h5><ul>
 <li><p><code>openssh</code>服务器</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install openssh-server openssh-client -y</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">sudo yum install openssh-server openssh-client -y</code></pre>
 </li>
 <li><p><code>git</code>服务器<code>gitosis</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git-core -y</span><br><span class="line">cd /tmp</span><br><span class="line">git clone https://github.com/res0nat0r/gitosis.git</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">sudo yum install git-core -y
+cd /tmp
+git clone https://github.com/res0nat0r/gitosis.git</code></pre>
 </li>
 <li><p>安装<code>gitosis</code>需要<code>python</code>的<code>python-setuptools</code>工具</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install python-setuptools -y</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">sudo yum install python-setuptools -y</code></pre>
 </li>
 <li><p>🍺OK，可以安装<code>git</code>服务器了</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd gitosis</span><br><span class="line">sudo python setup.py install</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">cd gitosis
+sudo python setup.py install</code></pre>
 <p>出现下面的信息表示安装成功了</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Using /usr/lib/python2.6/site-packages</span><br><span class="line">Finished processing dependencies for gitosis==0.2</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">Using /usr/lib/python2.6/site-packages
+Finished processing dependencies for gitosis==0.2</code></pre>
 <p>🍻所有的服务都安装好了，我们接下来就开始配置<code>git</code>服务器了</p>
 </li>
 </ul>
 <h5 id="通过gitosis-配置git服务器"><a href="#通过gitosis-配置git服务器" class="headerlink" title="通过gitosis 配置git服务器"></a>通过<code>gitosis</code> 配置<code>git</code>服务器</h5><ul>
 <li><p>创建<code>git</code>用户，设置密码，切换到<code>git</code>用户</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo useradd -m -s /bin/bash -d /home/git git</span><br><span class="line">sudo passwd git</span><br><span class="line">su - git</span><br></pre></td></tr></table></figure>
-
-
+<pre class=" language-shell"><code class="language-shell">  sudo useradd -m -s /bin/bash -d /home/git git
+  sudo passwd git
+  su - git</code></pre>
 </li>
-</ul>
-<ul>
 <li><p>上传管理git者的主机公钥用于建立连接git服务器 <font color="“red”">[非服务器主机操作]</font></p>
-<pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line"><span class="meta">#</span><span class="bash"> 一路回车就OK了</span></span><br></pre></td></tr></table></figure></code></pre></li>
-</ul>
-<pre><code>显示下面的信息就OK了
+<pre><code>```shell
+ssh-keygen -t rsa
+# 一路回车就OK了
+```
+
+显示下面的信息就OK了
 
 ![](http://7xrxhd.com1.z0.glb.clouddn.com/gits01.jpg)
 
 这时会生成 `id_rsa`和`id_rsa.pub` 两个文件，我们需要把 `id_rsa.pub`上传到`git`服务器上面
 
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">通过scp上传</span></span><br><span class="line">scp id_rsa.pub git@192.168.199.132:/home/git</span><br></pre></td></tr></table></figure></code></pre><p>   🍺这样管理git者这边暂且OK了。</p>
+```shell
+#通过scp上传
+scp id_rsa.pub git@192.168.199.132:/home/git
+```</code></pre><p>🍺这样管理git者这边暂且OK了。</p>
 <ul>
 <li><p>配置<code>git</code>服务器<code>gitosis</code></p>
-<pre><code>切换`git`用户，通过管理者主机的公钥初始化`gitosis`, 设置权限
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[git@localhost ~]$ gitosis-init &lt; /home/git/id_rsa.pub </span><br><span class="line">Initialized empty Git repository in /home/git/repositories/gitosis-	admin.git/</span><br><span class="line">Reinitialized existing Git repository in /home/git/repositories/gitosis-	admin.git/</span><br><span class="line">[git@localhost ~]$ sudo chmod 755 /home/git/repositories/gitosis-admin.git/	hooks/post-update</span><br></pre></td></tr></table></figure></code></pre></li>
-</ul>
-<pre><code>🍺初始化好了`gitosis`   </code></pre><ul>
+<p> 切换<code>git</code>用户，通过管理者主机的公钥初始化<code>gitosis</code>, 设置权限</p>
+<pre class=" language-shell"><code class="language-shell"> [git@localhost ~]$ gitosis-init < /home/git/id_rsa.pub 
+ Initialized empty Git repository in /home/git/repositories/gitosis-    admin.git/
+ Reinitialized existing Git repository in /home/git/repositories/gitosis-    admin.git/
+ [git@localhost ~]$ sudo chmod 755 /home/git/repositories/gitosis-admin.git/    hooks/post-update
+</code></pre>
+<p> 🍺初始化好了<code>gitosis</code>   </p>
+</li>
 <li><p>管理者主机clone gitosis-admin</p>
-<pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone ssh://git@192.168.199.132:22/gitosis-admin.git</span><br><span class="line">cd gitosis-admin</span><br><span class="line">ls</span><br><span class="line">gitosis.conf	keydir</span><br></pre></td></tr></table></figure></code></pre></li>
-</ul>
-<pre><code>`gitosis.conf`: git服务器配置文件
-`keydir`: 存放客户端公钥
+<pre class=" language-shell"><code class="language-shell"> git clone ssh://git@192.168.199.132:22/gitosis-admin.git
+ cd gitosis-admin
+ ls
+ gitosis.conf    keydir</code></pre>
+<p> <code>gitosis.conf</code>: git服务器配置文件<br> <code>keydir</code>: 存放客户端公钥</p>
+<p> 配置<code>gitosis.conf</code>文件</p>
+<pre class=" language-shell"><code class="language-shell"> [gitosis]
 
-配置`gitosis.conf`文件
+ [group gitosis-admin] #组名称
+ members = songlijun@songlijundeMBP.lan #组成员
+ writable = gitosis-admin #项目名称
 
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">   [gitosis]</span><br><span class="line"></span><br><span class="line">[group gitosis-admin] #组名称</span><br><span class="line">members = songlijun@songlijundeMBP.lan #组成员</span><br><span class="line">writable = gitosis-admin #项目名称</span><br><span class="line"></span><br><span class="line">[group git-test]</span><br><span class="line">members = songlijun@songlijundeMBP.lan</span><br><span class="line">writable = git-test</span><br></pre></td></tr></table></figure>
-
-
-这里添加了`git-test`项目组,上传到个git服务器
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   songlijundeMBP:gitosis-admin songlijun$ git add .</span><br><span class="line">songlijundeMBP:gitosis-admin songlijun$ git commit -m 'update gitosis.conf'</span><br><span class="line">[master 9967e3e] update gitosis.conf</span><br><span class="line">	1 file changed, 4 insertions(+)</span><br><span class="line">songlijundeMBP:gitosis-admin songlijun$ git push</span><br></pre></td></tr></table></figure></code></pre><ul>
+ [group git-test]
+ members = songlijun@songlijundeMBP.lan
+ writable = git-test</code></pre>
+<p> 这里添加了<code>git-test</code>项目组,上传到个git服务器</p>
+<pre class=" language-shell"><code class="language-shell"> songlijundeMBP:gitosis-admin songlijun$ git add .
+ songlijundeMBP:gitosis-admin songlijun$ git commit -m 'update gitosis.conf'
+ [master 9967e3e] update gitosis.conf
+  1 file changed, 4 insertions(+)
+ songlijundeMBP:gitosis-admin songlijun$ git push
+</code></pre>
+</li>
 <li><p>git服务器创建git-test.git仓库</p>
-<pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   [root@localhost repositories]# su git</span><br><span class="line">[git@localhost repositories]$ git init git-test.git --bare</span><br><span class="line">Initialized empty Git repository in /home/git/repositories/git-test.git/</span><br><span class="line">[git@localhost repositories]$ ls</span><br><span class="line">gitosis-admin.git  git-test.git</span><br></pre></td></tr></table></figure></code></pre></li>
-</ul>
-<pre><code>🍻在`git`服务器创建好了`git-test`的仓库，这样客户端即可以`clone`了，进行管理了。</code></pre><ul>
+<pre class=" language-shell"><code class="language-shell"> [root@localhost repositories]# su git
+ [git@localhost repositories]$ git init git-test.git --bare
+ Initialized empty Git repository in /home/git/repositories/git-test.git/
+ [git@localhost repositories]$ ls
+ gitosis-admin.git  git-test.git
+</code></pre>
+<p>🍻在<code>git</code>服务器创建好了<code>git-test</code>的仓库，这样客户端即可以<code>clone</code>了，进行管理了。</p>
+</li>
 <li><p>客户端clone git－test项目</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    songlijundeMBP:gitTest songlijun$ git clone ssh://git@192.168.199.132:22/		git-test.git</span><br><span class="line">Cloning into 'git-test'...</span><br><span class="line">warning: You appear to have cloned an empty repository.</span><br><span class="line">Checking connectivity... done.</span><br><span class="line">songlijundeMBP:gitTest songlijun$ ls</span><br><span class="line">git-test	gitosis-admin</span><br></pre></td></tr></table></figure>
-
-
+<pre class=" language-shell"><code class="language-shell">songlijundeMBP:gitTest songlijun$ git clone ssh://git@192.168.199.132:22/        git-test.git
+ Cloning into 'git-test'...
+ warning: You appear to have cloned an empty repository.
+ Checking connectivity... done.
+ songlijundeMBP:gitTest songlijun$ ls
+ git-test    gitosis-admin</code></pre>
+<p>🍺接下来就可以进行代码管理了。</p>
 </li>
 </ul>
-<pre><code>🍺接下来就可以进行代码管理了。</code></pre><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>在Linux搭建git服务器有点麻烦但是学习啊。相信自己。🍻</p>
+</li>
+</ul>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>在Linux搭建git服务器有点麻烦但是学习啊。相信自己。🍻</p>
 
             </div>
             <hr/>

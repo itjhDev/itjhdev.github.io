@@ -39,7 +39,7 @@ www  配置node的端口,请求">
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -457,22 +457,76 @@ www  配置node的端口,请求">
 </blockquote>
 </blockquote>
 <p>点击运行 控制台显示</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/bin/node --debug-brk=58764 --nolazy bin/www</span><br><span class="line">Debugger listening on port 58764</span><br><span class="line">Fri, 15 Jan 2016 08:23:04 GMT nodeApp1:server Listening on port 3000</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-shell"><code class="language-shell">/usr/local/bin/node --debug-brk=58764 --nolazy bin/www
+Debugger listening on port 58764
+Fri, 15 Jan 2016 08:23:04 GMT nodeApp1:server Listening on port 3000</code></pre>
 <p>恭喜你  😁 第一个node.js项目运行起来了.</p>
 <p>浏览器输入 <a href="http://127.0.0.1:3000" target="_blank" rel="noopener">http://127.0.0.1:3000</a> 就可以看到了。</p>
 <h4 id="创建Rest-API"><a href="#创建Rest-API" class="headerlink" title="创建Rest API"></a>创建Rest API</h4><p>我们在项目的根目录新建<code>api</code>文件夹，新建`users.json文件</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"user1"</span> : &#123;</span><br><span class="line">    <span class="attr">"name"</span> : <span class="string">"mahesh"</span>,</span><br><span class="line">    <span class="attr">"password"</span> : <span class="string">"password1"</span>,</span><br><span class="line">    <span class="attr">"profession"</span> : <span class="string">"teacher"</span>,</span><br><span class="line">    <span class="attr">"id"</span>: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"user2"</span> : &#123;</span><br><span class="line">    <span class="attr">"name"</span> : <span class="string">"suresh"</span>,</span><br><span class="line">    <span class="attr">"password"</span> : <span class="string">"password2"</span>,</span><br><span class="line">    <span class="attr">"profession"</span> : <span class="string">"librarian"</span>,</span><br><span class="line">    <span class="attr">"id"</span>: <span class="number">2</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"user3"</span> : &#123;</span><br><span class="line">    <span class="attr">"name"</span> : <span class="string">"ramesh"</span>,</span><br><span class="line">    <span class="attr">"password"</span> : <span class="string">"password3"</span>,</span><br><span class="line">    <span class="attr">"profession"</span> : <span class="string">"clerk"</span>,</span><br><span class="line">    <span class="attr">"id"</span>: <span class="number">3</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"user1"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"mahesh"</span><span class="token punctuation">,</span>
+    <span class="token property">"password"</span> <span class="token operator">:</span> <span class="token string">"password1"</span><span class="token punctuation">,</span>
+    <span class="token property">"profession"</span> <span class="token operator">:</span> <span class="token string">"teacher"</span><span class="token punctuation">,</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">1</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"user2"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"suresh"</span><span class="token punctuation">,</span>
+    <span class="token property">"password"</span> <span class="token operator">:</span> <span class="token string">"password2"</span><span class="token punctuation">,</span>
+    <span class="token property">"profession"</span> <span class="token operator">:</span> <span class="token string">"librarian"</span><span class="token punctuation">,</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">2</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"user3"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"ramesh"</span><span class="token punctuation">,</span>
+    <span class="token property">"password"</span> <span class="token operator">:</span> <span class="token string">"password3"</span><span class="token punctuation">,</span>
+    <span class="token property">"profession"</span> <span class="token operator">:</span> <span class="token string">"clerk"</span><span class="token punctuation">,</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">3</span>
+  <span class="token punctuation">}</span></code></pre>
 <p>然后新建<code>userApi.js</code>写user的API.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by songlijun on 16/1/15.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>); </span><br><span class="line"><span class="keyword">var</span> userApi = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"></span><br><span class="line">userApi.get(<span class="string">'/listUsers'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req,res</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">        fs.readFile(__dirname + <span class="string">"/"</span> + <span class="string">"user.json"</span>,<span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(data);</span><br><span class="line">            res.end(data);</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"><span class="built_in">module</span>.exports = userApi;</span><br></pre></td></tr></table></figure>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">/**
+ * Created by songlijun on 16/1/15.
+ */</span>
 
+<span class="token keyword">var</span> express <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'express'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token keyword">var</span> userApi <span class="token operator">=</span> express<span class="token punctuation">.</span><span class="token function">Router</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"fs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+userApi<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/listUsers'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span>res<span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        fs<span class="token punctuation">.</span><span class="token function">readFile</span><span class="token punctuation">(</span>__dirname <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> <span class="token string">"user.json"</span><span class="token punctuation">,</span><span class="token string">'utf8'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span>data<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> userApi<span class="token punctuation">;</span></code></pre>
 <p>然后在<code>app.js</code>文件中添加代码 加载<code>userApi</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> userApi = <span class="built_in">require</span>(<span class="string">'./api/userApi'</span>); <span class="comment">//加载userApi</span></span><br><span class="line"> </span><br><span class="line">app.use(userApi);</span><br></pre></td></tr></table></figure>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> userApi <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./api/userApi'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//加载userApi</span>
 
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>userApi<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+</code></pre>
 <p>OK了, 在浏览器输入:<a href="http://127.0.0.1:3000/listUsers" target="_blank" rel="noopener">http://127.0.0.1:3000/listUsers</a> 会返回所有的用户信息</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"user1"</span> : &#123;</span><br><span class="line">    <span class="attr">"name"</span> : <span class="string">"mahesh"</span>,</span><br><span class="line">    <span class="attr">"password"</span> : <span class="string">"password1"</span>,</span><br><span class="line">    <span class="attr">"profession"</span> : <span class="string">"teacher"</span>,</span><br><span class="line">    <span class="attr">"id"</span>: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"user2"</span> : &#123;</span><br><span class="line">    <span class="attr">"name"</span> : <span class="string">"suresh"</span>,</span><br><span class="line">    <span class="attr">"password"</span> : <span class="string">"password2"</span>,</span><br><span class="line">    <span class="attr">"profession"</span> : <span class="string">"librarian"</span>,</span><br><span class="line">    <span class="attr">"id"</span>: <span class="number">2</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"user3"</span> : &#123;</span><br><span class="line">    <span class="attr">"name"</span> : <span class="string">"ramesh"</span>,</span><br><span class="line">    <span class="attr">"password"</span> : <span class="string">"password3"</span>,</span><br><span class="line">    <span class="attr">"profession"</span> : <span class="string">"clerk"</span>,</span><br><span class="line">    <span class="attr">"id"</span>: <span class="number">3</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"user1"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"mahesh"</span><span class="token punctuation">,</span>
+    <span class="token property">"password"</span> <span class="token operator">:</span> <span class="token string">"password1"</span><span class="token punctuation">,</span>
+    <span class="token property">"profession"</span> <span class="token operator">:</span> <span class="token string">"teacher"</span><span class="token punctuation">,</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">1</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"user2"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"suresh"</span><span class="token punctuation">,</span>
+    <span class="token property">"password"</span> <span class="token operator">:</span> <span class="token string">"password2"</span><span class="token punctuation">,</span>
+    <span class="token property">"profession"</span> <span class="token operator">:</span> <span class="token string">"librarian"</span><span class="token punctuation">,</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">2</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"user3"</span> <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"ramesh"</span><span class="token punctuation">,</span>
+    <span class="token property">"password"</span> <span class="token operator">:</span> <span class="token string">"password3"</span><span class="token punctuation">,</span>
+    <span class="token property">"profession"</span> <span class="token operator">:</span> <span class="token string">"clerk"</span><span class="token punctuation">,</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">3</span>
+  <span class="token punctuation">}</span></code></pre>
 <p>接下来在<code>userApi.js</code>文件中写API了。是不是很简单。就是这么简单</p>
 <p>参考链接:</p>
 <p><a href="http://www.runoob.com/nodejs/nodejs-restful-api.html" target="_blank" rel="noopener">http://www.runoob.com/nodejs/nodejs-restful-api.html</a></p>

@@ -28,7 +28,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -776,7 +776,9 @@ Centos 6.7MongoDB 3.2.7
                                 
                                     
 隐藏tomcat名称修改conf/service.xml文件, server属性
-123456789101112131415&lt;Connector        executor="tomcatThreadPool"        p
+&lt;Connector
+        executor=&quot;tomcatThreadPool&quot;
+        port=&quot
                                 
                             </div>
                             <div class="publish-info">
@@ -843,7 +845,7 @@ yum 安装的mysql服务
 
 
 查看mysql的安装路径执行查询SQL
-1
+s
                                 
                             </div>
                             <div class="publish-info">
@@ -911,11 +913,9 @@ yum 安装的mysql服务
                             <div class="summary block-with-text">
                                 
                                     
-统计文件/文件夹下面的文件, 关键字出现的次数1grep -o &lt;关键字&gt; &lt;文件*.log&gt; | wc -l
-
-
+统计文件/文件夹下面的文件, 关键字出现的次数grep -o &lt;关键字&gt; &lt;文件*.log&gt; | wc -l
 统计文件的行数方便查看写了多少行的代码!
-1grep -n  ""  *.json | wc -l
+grep -n  &quot;&quot;  *.json |
                                 
                             </div>
                             <div class="publish-info">

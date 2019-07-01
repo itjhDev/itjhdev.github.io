@@ -28,7 +28,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -410,11 +410,9 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                             <div class="summary block-with-text">
                                 
                                     
-统计文件/文件夹下面的文件, 关键字出现的次数1grep -o &lt;关键字&gt; &lt;文件*.log&gt; | wc -l
-
-
+统计文件/文件夹下面的文件, 关键字出现的次数grep -o &lt;关键字&gt; &lt;文件*.log&gt; | wc -l
 统计文件的行数方便查看写了多少行的代码!
-1grep -n  ""  *.json | wc -l
+grep -n  &quot;&quot;  *.json |
                                 
                             </div>
                             <div class="publish-info">
@@ -599,10 +597,8 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    计算文件夹以及文件大小排序1for i in $(ls -l |grep '^d' |du -s * |sort -nr|awk '&#123;print $2&#125;');do du -sh $i;done
-
-
-Centos6 防火墙
+                                    计算文件夹以及文件大小排序for i in $(ls -l |grep &#39;^d&#39; |du -s * |sort -nr|awk &#39;{print $2}&#39;);do du -sh $i;done
+Centos6 
                                 
                             </div>
                             <div class="publish-info">
@@ -841,7 +837,10 @@ Jenkins 是一个开源项目，提供了一种易于使用的持续集成系统
 效果图:
 
 
-部分代码:设置滑动代理123456789101112131415
+部分代码:设置滑动代理/**
+ 设置滑动代理
+
+ - param
                                 
                             </div>
                             <div class="publish-info">
@@ -896,9 +895,7 @@ Jenkins 是一个开源项目，提供了一种易于使用的持续集成系统
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    实现按文件夹大小排序1for i in $(ls -l |grep '^d' |du -s * |sort -nr|awk '&#123;print $2&#125;');do du -sh $i;done
-
-
+                                    实现按文件夹大小排序 for i in $(ls -l |grep &#39;^d&#39; |du -s * |sort -nr|awk &#39;{print $2}&#39;);do du -sh $i;done 
                                 
                             </div>
                             <div class="publish-info">

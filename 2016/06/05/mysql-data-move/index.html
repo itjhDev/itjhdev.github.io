@@ -17,7 +17,7 @@ yum 安装的mysql服务
 
 
 查看mysql的安装路径执行查询SQL
-1">
+s">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -40,7 +40,7 @@ yum 安装的mysql服务
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -453,61 +453,53 @@ yum 安装的mysql服务
 
 
 <h4 id="查看mysql的安装路径"><a href="#查看mysql的安装路径" class="headerlink" title="查看mysql的安装路径"></a>查看<code>mysql</code>的安装路径</h4><p>执行查询<code>SQL</code></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%dir%'</span>;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://o449xphwj.qnssl.com/2016-06-05-14650509971882.jpg" alt></p>
+<pre><code>show variables like &#39;%dir%&#39;;</code></pre><p><img src="https://o449xphwj.qnssl.com/2016-06-05-14650509971882.jpg" alt></p>
 <p><code>datadir</code>就是数据路径</p>
 <h4 id="转移操作"><a href="#转移操作" class="headerlink" title="转移操作"></a>转移操作</h4><ul>
 <li><p>新建<code>mysql</code>数据目录</p>
-  <figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">mkdir</span> /<span class="class"><span class="keyword">data</span>/mysqlData</span></span><br></pre></td></tr></table></figure>
-</li>
+<pre><code>  mkdir /data/mysqlData</code></pre></li>
 <li><p>停止mysql服务</p>
-  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -u root -<span class="selector-tag">p</span> shutdown</span><br></pre></td></tr></table></figure>
-
-<p>  <img src="https://o449xphwj.qnssl.com/2016-06-05-14650514556754.jpg" alt></p>
+<pre><code>  mysqladmin -u root -p shutdown</code></pre><p>  <img src="https://o449xphwj.qnssl.com/2016-06-05-14650514556754.jpg" alt></p>
 <p>  输入密码, 等待停止</p>
 </li>
 <li><p>把<code>/var/lib/mysql</code>整个目录复制到 <code>/data/mysqlData</code></p>
-  <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -rf /var/<span class="class"><span class="keyword">lib</span>/<span class="title">mysql</span> /<span class="title">data</span>/<span class="title">mysqlData</span>/</span></span><br></pre></td></tr></table></figure>
-</li>
+<pre><code>  cp -rf /var/lib/mysql /data/mysqlData/</code></pre></li>
 <li><p>修改<code>my.cnf</code>文件</p>
-  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/my<span class="selector-class">.cnf</span> /etc/my<span class="selector-class">.cnf</span><span class="selector-class">.bak</span></span><br><span class="line">vim /etc/my.cnf</span><br></pre></td></tr></table></figure>
+<pre><code>  cp /etc/my.cnf /etc/my.cnf.bak
+  vim /etc/my.cnf</code></pre><p>  文件内容如下, 需要修改<code>datadir</code>, <code>socket</code>对应的目录</p>
+<pre><code>  [mysqld]
+  default-character-set=utf8
+  #datadir=/var/lib/mysql
+  datadir=/data/mysqlData/mysql ####
+  #socket=/var/lib/mysql/mysql.sock
+  socket=/var/lib/mysql/mysql.sock ####
+  user=mysql
+  # Disabling symbolic-links is recommended to prevent assorted security risks
+  symbolic-links=0
 
-<p>  文件内容如下, 需要修改<code>datadir</code>, <code>socket</code>对应的目录</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">default-character-<span class="keyword">set</span>=utf8</span><br><span class="line"><span class="comment">#datadir=/var/lib/mysql</span></span><br><span class="line">datadir=/<span class="keyword">data</span>/mysqlData/mysql <span class="comment">####</span></span><br><span class="line"><span class="comment">#socket=/var/lib/mysql/mysql.sock</span></span><br><span class="line">socket=/<span class="keyword">var</span>/lib/mysql/mysql.sock <span class="comment">####</span></span><br><span class="line"><span class="keyword">user</span>=mysql</span><br><span class="line"><span class="comment"># Disabling symbolic-links is recommended to prevent assorted security risks</span></span><br><span class="line">symbolic-links=<span class="number">0</span></span><br><span class="line"></span><br><span class="line">[mysqld_safe]</span><br><span class="line"><span class="keyword">log</span>-<span class="keyword">error</span>=/<span class="keyword">var</span>/<span class="keyword">log</span>/mysqld.log</span><br><span class="line">pid-<span class="keyword">file</span>=/<span class="keyword">var</span>/run/mysqld/mysqld.pid</span><br><span class="line"></span><br><span class="line"> [mysql]</span><br><span class="line">       <span class="keyword">default</span>-<span class="built_in">character</span>-<span class="keyword">set</span>=utf8</span><br><span class="line">[<span class="keyword">client</span>]</span><br><span class="line">       <span class="keyword">default</span>-<span class="built_in">character</span>-<span class="keyword">set</span>=utf8</span><br></pre></td></tr></table></figure>
-</li>
+  [mysqld_safe]
+  log-error=/var/log/mysqld.log
+  pid-file=/var/run/mysqld/mysqld.pid
+
+   [mysql]
+         default-character-set=utf8
+  [client]
+         default-character-set=utf8</code></pre></li>
 <li><p>修改MySQL启动脚本<code>/etc/init.d/mysqld</code></p>
-  <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim <span class="regexp">/etc/i</span>nit.d<span class="regexp">/mysqld</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<pre><code>修改文件中`datadir`路径
-
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#get_mysql_option</span> mysqld datadir <span class="string">"/var/lib/mysql"</span></span><br><span class="line">get_mysql_option mysqld datadir <span class="string">"/data/mysqlData/mysql"</span></span><br></pre></td></tr></table></figure>
-
-
-因为是通过`yum`安装的需要修改`/usr/lib64/mysql/mysql_config`文件
-
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim <span class="regexp">/usr/</span>lib64<span class="regexp">/mysql/my</span>sql_config</span><br></pre></td></tr></table></figure>
-
-
-修改内容
-
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#ldata='/var/lib/mysql'</span></span><br><span class="line"><span class="attr">ldata</span>=<span class="string">'/data/mysqlData/mysql'</span></span><br><span class="line"><span class="comment">#socket='/var/lib/mysql/mysql.sock'</span></span><br><span class="line"><span class="attr">socket</span>=<span class="string">'/data/mysqlData/mysql/mysql.sock'</span></span><br></pre></td></tr></table></figure></code></pre><ul>
+<pre><code>  vim /etc/init.d/mysqld</code></pre><p>  修改文件中<code>datadir</code>路径</p>
+<pre><code>  #get_mysql_option mysqld datadir &quot;/var/lib/mysql&quot;
+  get_mysql_option mysqld datadir &quot;/data/mysqlData/mysql&quot;</code></pre><p>  因为是通过<code>yum</code>安装的需要修改<code>/usr/lib64/mysql/mysql_config</code>文件</p>
+<pre><code>  vim /usr/lib64/mysql/mysql_config</code></pre><p>  修改内容</p>
+<pre><code>  #ldata=&#39;/var/lib/mysql&#39;
+  ldata=&#39;/data/mysqlData/mysql&#39;
+  #socket=&#39;/var/lib/mysql/mysql.sock&#39;
+  socket=&#39;/data/mysqlData/mysql/mysql.sock&#39;</code></pre></li>
 <li><p>修改权限    </p>
-  <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@sample</span> ~]<span class="meta"># chown -R mysql:mysql /data/mysqlData/mysql/ ← 改变数据库的归属为    mysql</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
+<pre><code>  [root@sample ~]# chown -R mysql:mysql /data/mysqlData/mysql/ ← 改变数据库的归属为    mysql</code></pre></li>
 </ul>
-<h4 id="重启mysql服务"><a href="#重启mysql服务" class="headerlink" title="重启mysql服务"></a>重启mysql服务</h4><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">service mysqld restart</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://o449xphwj.qnssl.com/2016-06-05-14650539835119.jpg" alt></p>
+<h4 id="重启mysql服务"><a href="#重启mysql服务" class="headerlink" title="重启mysql服务"></a>重启mysql服务</h4><pre><code>service mysqld restart</code></pre><p><img src="https://o449xphwj.qnssl.com/2016-06-05-14650539835119.jpg" alt></p>
 <p>执行一下查询<code>sql</code></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%dir%'</span>;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://o449xphwj.qnssl.com/2016-06-05-14650532180855.jpg" alt></p>
+<pre><code>show variables like &#39;%dir%&#39;;</code></pre><p><img src="https://o449xphwj.qnssl.com/2016-06-05-14650532180855.jpg" alt></p>
 <p>发现<code>datadir</code>的路径变了, 可以正常的运行<code>sql</code>, 证明可以正常的获取数据了.</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>这次操作是在测试服务器上操作的, 心情还是很紧张, 如果需要操作线上的数据库, 一定要谨慎, 一定要谨慎, 一定要谨慎. 一定要注意备份. 这次迁移要保证在20分钟完成, 这样减少一下损失.</p>
 <h4 id="注意⚠️"><a href="#注意⚠️" class="headerlink" title="注意⚠️"></a>注意⚠️</h4><p>⚠️ 通过<code>yum</code>安装的需要修改/usr/lib64/mysql/mysql_config文件</p>
@@ -730,7 +722,9 @@ yum 安装的mysql服务
                         
                             
 隐藏tomcat名称修改conf/service.xml文件, server属性
-123456789101112131415&lt;Connector        executor="tomcatThreadPool"        p
+&lt;Connector
+        executor=&quot;tomcatThreadPool&quot;
+        port=&quot
                         
                     </div>
                     <div class="publish-info">
@@ -776,11 +770,9 @@ yum 安装的mysql服务
                     <div class="summary block-with-text">
                         
                             
-统计文件/文件夹下面的文件, 关键字出现的次数1grep -o &lt;关键字&gt; &lt;文件*.log&gt; | wc -l
-
-
+统计文件/文件夹下面的文件, 关键字出现的次数grep -o &lt;关键字&gt; &lt;文件*.log&gt; | wc -l
 统计文件的行数方便查看写了多少行的代码!
-1grep -n  ""  *.json | wc -l
+grep -n  &quot;&quot;  *.json |
                         
                     </div>
                     <div class="publish-info">

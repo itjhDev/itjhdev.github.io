@@ -31,7 +31,7 @@ Docker 是一个开源的应用容器引擎，让开发者可以打包他们的�
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -454,28 +454,58 @@ Docker 是一个开源的应用容器引擎，让开发者可以打包他们的�
 </li>
 </ul>
 <p>  🍺恭喜你<code>Docker</code> 安装成功，并愉快的启动了。我们输入<code>docker info</code> 看一下<code>Docker</code>的信息</p>
-<pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">songlijundeMBP:~ songlijun$ docker info</span><br><span class="line">Containers: 1</span><br><span class="line">Images: 35</span><br><span class="line">Server Version: 1.9.1</span><br><span class="line">Storage Driver: aufs</span><br><span class="line"> Root Dir: /mnt/sda1/var/lib/docker/aufs</span><br><span class="line"> Backing Filesystem: extfs</span><br><span class="line"> Dirs: 37</span><br><span class="line"> Dirperm1 Supported: true</span><br><span class="line">Execution Driver: native-0.2</span><br><span class="line">Logging Driver: json-file</span><br><span class="line">Kernel Version: 4.1.13-boot2docker</span><br><span class="line">Operating System: Boot2Docker 1.9.1 (TCL 6.4.1); master : cef800b - Fri Nov 20 19:33:59 UTC 2015</span><br><span class="line">CPUs: 1</span><br><span class="line">Total Memory: 1.956 GiB</span><br><span class="line">Name: default</span><br><span class="line">ID: CQ5W:D7FM:XWFG:XQ7B:4F4Z:F6QT:BI2R:ZFQM:ZIY3:XIPC:VJ3O:IHMG</span><br><span class="line">Debug mode (server): true</span><br><span class="line"> File Descriptors: 12</span><br><span class="line"> Goroutines: 18</span><br><span class="line"> System Time: 2016-03-29T01:44:14.208919179Z</span><br><span class="line"> EventsListeners: 0</span><br><span class="line"> Init SHA1:</span><br><span class="line"> Init Path: /usr/local/bin/docker</span><br><span class="line"> Docker Root Dir: /mnt/sda1/var/lib/docker</span><br><span class="line">Labels:</span><br><span class="line"> provider=virtualbox</span><br><span class="line">songlijundeMBP:~ songlijun$</span><br></pre></td></tr></table></figure></code></pre><h4 id="安装centos-image"><a href="#安装centos-image" class="headerlink" title="安装centos image"></a>安装centos image</h4><p>  <code>Docker</code>已经启动了，开始安装这个<code>image</code>了</p>
+<pre><code>```shell
+songlijundeMBP:~ songlijun$ docker info
+Containers: 1
+Images: 35
+Server Version: 1.9.1
+Storage Driver: aufs
+ Root Dir: /mnt/sda1/var/lib/docker/aufs
+ Backing Filesystem: extfs
+ Dirs: 37
+ Dirperm1 Supported: true
+Execution Driver: native-0.2
+Logging Driver: json-file
+Kernel Version: 4.1.13-boot2docker
+Operating System: Boot2Docker 1.9.1 (TCL 6.4.1); master : cef800b - Fri Nov 20 19:33:59 UTC 2015
+CPUs: 1
+Total Memory: 1.956 GiB
+Name: default
+ID: CQ5W:D7FM:XWFG:XQ7B:4F4Z:F6QT:BI2R:ZFQM:ZIY3:XIPC:VJ3O:IHMG
+Debug mode (server): true
+ File Descriptors: 12
+ Goroutines: 18
+ System Time: 2016-03-29T01:44:14.208919179Z
+ EventsListeners: 0
+ Init SHA1:
+ Init Path: /usr/local/bin/docker
+ Docker Root Dir: /mnt/sda1/var/lib/docker
+Labels:
+ provider=virtualbox
+songlijundeMBP:~ songlijun$
+```</code></pre><h4 id="安装centos-image"><a href="#安装centos-image" class="headerlink" title="安装centos image"></a>安装centos image</h4><p>  <code>Docker</code>已经启动了，开始安装这个<code>image</code>了</p>
 <ul>
 <li><p>安装centos </p>
 <p>输入命令： 安装centos:7</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull centos:7</span><br></pre></td></tr></table></figure>
-
-
+<pre class=" language-shell"><code class="language-shell">docker pull centos:7</code></pre>
+<p>出现下面的信息恭喜你安装成功了</p>
+<pre class=" language-shell"><code class="language-shell">7: Pulling from library/centos
+  eb98cdc284d4: Pull complete
+  Digest:     sha256:3cdc0670fe9130ab3741b126cfac6d7720492dd2c1c8ae033dcd77d32855bab2
+    Status: Downloaded newer image for centos:7</code></pre>
 </li>
-</ul>
-<pre><code>出现下面的信息恭喜你安装成功了
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">7: Pulling from library/centos</span><br><span class="line">  eb98cdc284d4: Pull complete</span><br><span class="line">  Digest:     sha256:3cdc0670fe9130ab3741b126cfac6d7720492dd2c1c8ae033dcd77d32855bab2</span><br><span class="line">    Status: Downloaded newer image for centos:7</span><br></pre></td></tr></table></figure></code></pre><ul>
 <li><p>启动centos</p>
 <p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -ti centos:7 /bin/bash</span><br><span class="line"></span><br><span class="line">[root@457f7f5353aa /]# ls</span><br><span class="line">anaconda-post.log  dev  home  lib64       media  opt   root  sbin  sys  usr</span><br><span class="line">bin                etc  lib   lost+found  mnt    proc  run   srv   tmp  var</span><br></pre></td></tr></table></figure>
+<pre class=" language-shell"><code class="language-shell">docker run -ti centos:7 /bin/bash
 
-
+[root@457f7f5353aa /]# ls
+anaconda-post.log  dev  home  lib64       media  opt   root  sbin  sys  usr
+bin                etc  lib   lost+found  mnt    proc  run   srv   tmp  var</code></pre>
+<p>🍻 简单吧，这样我们就创建<code>centos</code>的image。接下来我们通过｀Kitematic｀看一下我们的<code>image</code>运行情况</p>
+<p><img src="http://7xrxhd.com1.z0.glb.clouddn.com/2016-03-29-doc3.jpg" alt="do"></p>
+<p>刚才我们创建的<code>centos</code> 正在快了的运行中.</p>
 </li>
 </ul>
-<p>   🍻 简单吧，这样我们就创建<code>centos</code>的image。接下来我们通过｀Kitematic｀看一下我们的<code>image</code>运行情况</p>
-<p>   <img src="http://7xrxhd.com1.z0.glb.clouddn.com/2016-03-29-doc3.jpg" alt="do"></p>
-<p>   刚才我们创建的<code>centos</code> 正在快了的运行中.</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><code>Docker</code> 说白了就是一个虚拟机。但是比虚拟机更加虚拟。较少空间就可以完成主要的功能。接下来开始安装<code>redis</code>,<code>mysql</code>等<code>image</code>.</p>
 <p>Weibo: <a href="http://weibo.com/313381777" target="_blank" rel="noopener">宋立君</a></p>
 <p>Github: <a href="https://github.com/itjhDev" target="_blank" rel="noopener">itjhDev</a></p>

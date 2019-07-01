@@ -7,7 +7,9 @@
     <meta name="keywords" content="Tomcat 奇淫绝技, itjh">
     <meta name="description" content="
 隐藏tomcat名称修改conf/service.xml文件, server属性
-123456789101112131415&amp;lt;Connector        executor=&#34;tomcatThreadPool&#34;        p">
+&amp;lt;Connector
+        executor=&amp;quot;tomcatThreadPool&amp;quot;
+        port=&amp;quot">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -30,7 +32,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -412,16 +414,31 @@
             <div id="articleContent">
                 <p><img src="https://o449xphwj.qnssl.com/2016-06-27-2000px-Tomcat-logo.svg.png" alt></p>
 <h4 id="隐藏tomcat名称"><a href="#隐藏tomcat名称" class="headerlink" title="隐藏tomcat名称"></a>隐藏<code>tomcat</code>名称</h4><p>修改<code>conf/service.xml</code>文件, <code>server</code>属性</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector</span><br><span class="line">        <span class="attribute">executor</span>=<span class="string">"tomcatThreadPool"</span></span><br><span class="line">        <span class="attribute">port</span>=<span class="string">"8080"</span></span><br><span class="line">        <span class="attribute">protocol</span>=<span class="string">"org.apache.coyote.http11.Http11Nio2Protocol"</span></span><br><span class="line">        <span class="attribute">connectionTimeout</span>=<span class="string">"20000"</span></span><br><span class="line">        <span class="attribute">maxConnections</span>=<span class="string">"10000"</span></span><br><span class="line">        <span class="attribute">redirectPort</span>=<span class="string">"8443"</span></span><br><span class="line">        <span class="attribute">enableLookups</span>=<span class="string">"flase"</span></span><br><span class="line">        <span class="attribute">acceptCount</span>=<span class="string">"100"</span></span><br><span class="line">        <span class="attribute">maxPostSize</span>=<span class="string">"10485760"</span></span><br><span class="line">        <span class="attribute">disableUploadTimeout</span>=<span class="string">"true"</span></span><br><span class="line">        <span class="attribute">acceptorThreadCount</span>=<span class="string">"2"</span></span><br><span class="line">        <span class="attribute">URIEncoding</span>=<span class="string">"utf-8"</span></span><br><span class="line">        <span class="attribute">server</span>=<span class="string">"new api from tomcat8 server"</span></span><br><span class="line">        /&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="禁用SHUTDOWN命令"><a href="#禁用SHUTDOWN命令" class="headerlink" title="禁用SHUTDOWN命令"></a>禁用SHUTDOWN命令</h4><p><code>tomcat</code>初始输入命令<code>telnet localhost 8005 SHUTDOWN</code>就会关闭tomcat, 这是很危险了! 为了我们的安全关闭这个东西.</p>
+<pre><code>&lt;Connector
+        executor=&quot;tomcatThreadPool&quot;
+        port=&quot;8080&quot;
+        protocol=&quot;org.apache.coyote.http11.Http11Nio2Protocol&quot;
+        connectionTimeout=&quot;20000&quot;
+        maxConnections=&quot;10000&quot;
+        redirectPort=&quot;8443&quot;
+        enableLookups=&quot;flase&quot;
+        acceptCount=&quot;100&quot;
+        maxPostSize=&quot;10485760&quot;
+        disableUploadTimeout=&quot;true&quot;
+        acceptorThreadCount=&quot;2&quot;
+        URIEncoding=&quot;utf-8&quot;
+        server=&quot;new api from tomcat8 server&quot;
+        /&gt;</code></pre><h4 id="禁用SHUTDOWN命令"><a href="#禁用SHUTDOWN命令" class="headerlink" title="禁用SHUTDOWN命令"></a>禁用SHUTDOWN命令</h4><p><code>tomcat</code>初始输入命令<code>telnet localhost 8005 SHUTDOWN</code>就会关闭tomcat, 这是很危险了! 为了我们的安全关闭这个东西.</p>
 <p>修改<code>conf/service.xml</code>文件,  8005改成-1</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Server <span class="attribute">port</span>=<span class="string">"-1"</span> <span class="attribute">shutdown</span>=<span class="string">"SHUTDOWN"</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="传输压缩"><a href="#传输压缩" class="headerlink" title="传输压缩"></a>传输压缩</h4><p>在进行网络传输时, 进行静态文件等压缩处理</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector <span class="attribute">port</span>=<span class="string">"8080"</span> </span><br><span class="line">    <span class="attribute">protocol</span>=<span class="string">"HTTP/1.1"</span> </span><br><span class="line">    <span class="attribute">connectionTimeout</span>=<span class="string">"20000"</span> </span><br><span class="line">    <span class="attribute">redirectPort</span>=<span class="string">"8443"</span> </span><br><span class="line">    <span class="attribute">compression</span>=<span class="string">"on"</span> </span><br><span class="line">    <span class="attribute">compressionMinSize1</span>=<span class="string">"2048"</span> </span><br><span class="line">    <span class="attribute">noCompressionUserAgents</span>=<span class="string">"gozilla, traviata"</span> </span><br><span class="line">    <span class="attribute">compressableMimeType</span>=<span class="string">"text/html,text/xml,text/javascript,text/css,text/plain,application/octet-stream"</span>/&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<pre><code>&lt;Server port=&quot;-1&quot; shutdown=&quot;SHUTDOWN&quot;&gt;</code></pre><h4 id="传输压缩"><a href="#传输压缩" class="headerlink" title="传输压缩"></a>传输压缩</h4><p>在进行网络传输时, 进行静态文件等压缩处理</p>
+<pre><code>&lt;Connector port=&quot;8080&quot; 
+    protocol=&quot;HTTP/1.1&quot; 
+    connectionTimeout=&quot;20000&quot; 
+    redirectPort=&quot;8443&quot; 
+    compression=&quot;on&quot; 
+    compressionMinSize1=&quot;2048&quot; 
+    noCompressionUserAgents=&quot;gozilla, traviata&quot; 
+    compressableMimeType=&quot;text/html,text/xml,text/javascript,text/css,text/plain,application/octet-stream&quot;/&gt;</code></pre><h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
 <li>Tomcat 6 文档: <a href="https://tomcat.apache.org/tomcat-6.0-doc/config" target="_blank" rel="noopener">https://tomcat.apache.org/tomcat-6.0-doc/config</a></li>
 <li>Tomcat 7 文档: <a href="https://tomcat.apache.org/tomcat-7.0-doc/config/" target="_blank" rel="noopener">https://tomcat.apache.org/tomcat-7.0-doc/config/</a></li>
 <li>Tomcat 8 文档: <a href="https://tomcat.apache.org/tomcat-8.0-doc/config/" target="_blank" rel="noopener">https://tomcat.apache.org/tomcat-8.0-doc/config/</a></li>
@@ -700,7 +717,7 @@ yum 安装的mysql服务
 
 
 查看mysql的安装路径执行查询SQL
-1
+s
                         
                     </div>
                     <div class="publish-info">

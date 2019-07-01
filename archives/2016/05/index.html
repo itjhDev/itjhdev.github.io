@@ -28,7 +28,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -530,10 +530,8 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    计算文件夹以及文件大小排序1for i in $(ls -l |grep '^d' |du -s * |sort -nr|awk '&#123;print $2&#125;');do du -sh $i;done
-
-
-Centos6 防火墙
+                                    计算文件夹以及文件大小排序for i in $(ls -l |grep &#39;^d&#39; |du -s * |sort -nr|awk &#39;{print $2}&#39;);do du -sh $i;done
+Centos6 
                                 
                             </div>
                             <div class="publish-info">
